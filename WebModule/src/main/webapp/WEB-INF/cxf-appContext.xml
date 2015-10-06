@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://cxf.apache.org/jaxrs
+                            http://cxf.apache.org/schemas/jaxrs.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <!--
+        &lt;!&ndash; Exception mapper &ndash;&gt;
+        <bean id="exceptionMapper" class="com.mmt.shubh.rest.providers.ExpenseManagerExceptionMapper"/>
+    -->
+    <!-- Swagger writers -->
+    <jaxrs:server address="/"
+                  basePackages=
+                          "com.mmt.shubh.rest.resources.expensebook,
+                   com.mmt.shubh.rest.resources.member,
+                   com.mmt.shubh.rest.resources.category,
+                   com.mmt.shubh.rest.resources.expensebook,
+                   com.mmt.shubh.rest.providers,
+                   com.mmt.shubh.rest.bindings,
+                   com.mmt.shubh.rest.markers
+                  ">
+        <jaxrs:providers>
+            <ref bean="jsonProvider"/>
+        </jaxrs:providers>
+    </jaxrs:server>
+
+
+    <!-- JSON mapper -->
+    <bean id="jsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider"/>
+
+</beans>

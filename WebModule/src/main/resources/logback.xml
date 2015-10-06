@@ -1,0 +1,35 @@
+<configuration>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d %p \(%t\) [%c] - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="R"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>true</append>
+        <File>${user.dir}/logs/expenseManager.log</File>
+        <encoder>
+            <pattern>%date %level \(%thread\) [%c] - %message%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <maxIndex>40</maxIndex>
+            <FileNamePattern>${user.dir}/customer.log.%i</FileNamePattern>
+        </rollingPolicy>
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>25MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <logger name="com.mmt.shubh" level="debug"/>
+    <logger name="org.apache.cxf" level="debug"/>
+    <logger name="org.hibernate" level="info"/>
+
+    <root level="info">
+        <appender-ref ref="R"/>
+        <appender-ref ref="stdout"/>
+    </root>
+
+</configuration>
