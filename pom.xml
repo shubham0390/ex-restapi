@@ -76,17 +76,8 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>${spring.data.jpa.version}</version>
-        </dependency>
 
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
@@ -97,17 +88,25 @@
             <artifactId>cxf-rt-rs-extension-providers</artifactId>
             <version>${cxf.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
 
         <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>${javax.mail.version}</version>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-ws-security</artifactId>
+            <version>${cxf.version}</version>
         </dependency>
+
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http-jetty</artifactId>
+            <version>${cxf.version}</version>
         </dependency>
+
+
         <dependency>
             <groupId>org.pojomatic</groupId>
             <artifactId>pojomatic</artifactId>
@@ -149,51 +148,13 @@
             <artifactId>jackson-jaxrs-json-provider</artifactId>
             <version>${jackson.jaxrs.version}</version>
         </dependency>
-
-        <!-- runtime dependencies begin-->
-
-        <dependency>
-            <groupId>org.javasimon</groupId>
-            <artifactId>javasimon-spring</artifactId>
-            <version>${javasimon.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.javasimon</groupId>
-            <artifactId>javasimon-console-embed</artifactId>
-            <version>${javasimon.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.javasimon</groupId>
-            <artifactId>javasimon-jdbc4</artifactId>
-            <version>${javasimon.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>${commons.dbcp.version}</version>
-            <scope>runtime</scope>
-        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectjweaver.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.classic.version}</version>
-            <scope>runtime</scope>
-        </dependency>
+
         <!-- runtime dependencies end-->
 
         <!-- provided dependencies begin -->
@@ -203,8 +164,15 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-        <!-- provided dependencies end -->
 
+        <!-- provided dependencies end-->
+
+        <!-- Database dependency starts -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -220,13 +188,37 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.connector.java.version}</version>
         </dependency>
-        <!-- logging -->
+
+        <!-- Database dependency end-->
+
+
+        <!-- logging dependency starts-->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-        <!-- test scoped -->
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.classic.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <!-- logging dependency end-->
+
+        <!-- Spring dependency starts-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring.data.jpa.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
@@ -249,18 +241,7 @@
             <version>${commons-lang3.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-core</artifactId>
-            <version>${org.hamcrest.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-library</artifactId>
-            <version>${org.hamcrest.version}</version>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -277,45 +258,8 @@
             <artifactId>wss4j</artifactId>
             <version>1.6.15</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.santuario</groupId>
-            <artifactId>xmlsec</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-ws-security</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http-jetty</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-servlet_3.0_spec</artifactId>
-            <version>1.0</version>
-        </dependency>
     </dependencies>
 
-    <repositories>
-        <!-- For 3.5 and older -->
-        <repository>
-            <id>prime-repo</id>
-            <name>PrimeFaces Maven Repository</name>
-            <url>http://repository.primefaces.org</url>
-            <layout>default</layout>
-        </repository>
-
-    </repositories>
     <build>
         <plugins>
             <plugin>
@@ -335,7 +279,9 @@
                     <execution>
                         <id>copy-dependencies</id>
                         <phase>package</phase>
-                        <goals><goal>copy-dependencies</goal></goals>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
