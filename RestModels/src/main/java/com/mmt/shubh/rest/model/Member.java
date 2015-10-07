@@ -15,7 +15,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Getter
 @Setter
 public class Member {
+
     private long id;
+
     private String memberName;
 
     private String memberEmail;

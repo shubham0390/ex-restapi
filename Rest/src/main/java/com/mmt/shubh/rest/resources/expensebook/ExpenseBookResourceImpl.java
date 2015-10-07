@@ -5,6 +5,7 @@ import com.mmt.shubh.rest.model.Member;
 import com.mmt.shubh.service.expensebook.IExpenseBookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.core.Response;
@@ -21,6 +22,7 @@ import java.util.List;
 public class ExpenseBookResourceImpl implements IExpenseBookResource {
 
     @Autowired
+    @Qualifier(value = "expenseBookServiceImpl")
     IExpenseBookService mExpenseBookService;
 
     @Override

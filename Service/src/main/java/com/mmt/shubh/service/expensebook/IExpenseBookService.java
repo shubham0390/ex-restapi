@@ -3,6 +3,7 @@ package com.mmt.shubh.service.expensebook;
 import com.mmt.shubh.rest.model.ExpenseBook;
 import com.mmt.shubh.rest.model.Member;
 import com.mmt.shubh.rest.response.ServiceResponse;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * <p>
  * TODO: Add class comments
  */
+@Service
 public interface IExpenseBookService {
 
     ServiceResponse createExpenseBook(ExpenseBook expenseBook);

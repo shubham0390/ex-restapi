@@ -3,6 +3,7 @@ package com.mmt.shubh.repository.expensebook;
 import com.mmt.shubh.BaseRepository;
 import com.mmt.shubh.entity.ExpenseBookEntity;
 import com.mmt.shubh.entity.MemberEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Query;
@@ -14,7 +15,7 @@ import java.util.List;
  * <p>
  * TODO: Add class comments
  */
-@Service
+@Component
 public class ExpenseBookRepositoryImpl extends BaseRepository<ExpenseBookEntity> implements IExpenseBookRepository {
 
     @Override
@@ -27,7 +28,7 @@ public class ExpenseBookRepositoryImpl extends BaseRepository<ExpenseBookEntity>
         update(expenseBookEntity);
     }
 
-    @Override
+    /*@Override
     public void addMember(long id, MemberEntity memberEntity) {
 
     }
@@ -48,8 +49,8 @@ public class ExpenseBookRepositoryImpl extends BaseRepository<ExpenseBookEntity>
     }
 
     @Override
-    public List<ExpenseBookEntity> getExpenseBookListByMemberEmail(String memberEmailId) {
-       /* String s = "SELECT eb FROM ExpenseBookEntity eb " +
+    public List<ExpenseBookEntity> getExpenseBook(String memberEmailId) {
+       *//* String s = "SELECT eb FROM ExpenseBookEntity eb " +
                 "INNER JOIN eb.memberList member " +
                 "WHERE member.member_email = :member_email";
 
@@ -57,13 +58,13 @@ public class ExpenseBookRepositoryImpl extends BaseRepository<ExpenseBookEntity>
         Query query = session.createQuery(hql);
         query.setParameterList("tags", tags);
         query.setInteger("tag_count", tags.length);
-        List<Article> articles = query.list();*/
+        List<Article> articles = query.list();*//*
         return null;
     }
 
     @Override
-    public List<ExpenseBookEntity> getExpenseBookListByMemberId(long memberId) {
+    public List<ExpenseBookEntity> getExpenseBook(long memberId) {
         return null;
-    }
+    }*/
 
 }

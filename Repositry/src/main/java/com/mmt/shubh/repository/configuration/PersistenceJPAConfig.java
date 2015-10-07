@@ -1,10 +1,6 @@
 package com.mmt.shubh.repository.configuration;
 
-import java.util.Properties;
-
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-
+import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,7 +16,9 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.google.common.base.Preconditions;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
@@ -29,10 +27,10 @@ import com.google.common.base.Preconditions;
 @EnableJpaRepositories(basePackages = "com.mmt.shubh.repository")
 public class PersistenceJPAConfig {
 
-private static final String PROPERTY_KEY_DRIVER_NAME = "jdbc.driverClassName";
-private static final String PROPERTY_KEY_URL = "jdbc.url";
-private static final String PROPERTY_KEY_USER_NAME = "jdbc.user";
-private static final String PROPERTY_KEY_PASSWORD = "jdbc.pass";
+    private static final String PROPERTY_KEY_DRIVER_NAME = "jdbc.driverClassName";
+    private static final String PROPERTY_KEY_URL = "jdbc.url";
+    private static final String PROPERTY_KEY_USER_NAME = "jdbc.user";
+    private static final String PROPERTY_KEY_PASSWORD = "jdbc.pass";
 
 
     @Autowired
@@ -48,7 +46,7 @@ private static final String PROPERTY_KEY_PASSWORD = "jdbc.pass";
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[]{"com.mmt.shubh.entity"});
+        em.setPackagesToScan(new String[]{"com.mmt.shubh.repository", "com.mmt.shubh.entity"});
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());

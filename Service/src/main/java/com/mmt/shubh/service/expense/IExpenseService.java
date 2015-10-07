@@ -1,5 +1,7 @@
 package com.mmt.shubh.service.expense;
 
+import org.springframework.stereotype.Service;
+
 import javax.ws.rs.core.Response;
 
 /**
@@ -8,6 +10,7 @@ import javax.ws.rs.core.Response;
  * <p>
  * TODO: Add class comments
  */
+@Service
 public interface IExpenseService {
 
     Response createExpense();

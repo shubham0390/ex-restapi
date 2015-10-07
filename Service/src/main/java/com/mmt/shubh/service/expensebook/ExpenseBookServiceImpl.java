@@ -11,7 +11,7 @@ import com.mmt.shubh.service.converter.EntityModelConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -22,13 +22,14 @@ import java.util.List;
  * <p>
  * TODO: Add class comments
  */
-@Service
+@Component
 @Slf4j
 @Transactional
 public class ExpenseBookServiceImpl implements IExpenseBookService {
 
 
     @Autowired
+    @Qualifier(value = "expenseBookRepositoryImpl")
     IExpenseBookRepository mExpenseBookRepository;
 
     @Qualifier("memberRepositoryImpl")
@@ -58,23 +59,23 @@ public class ExpenseBookServiceImpl implements IExpenseBookService {
     }
 
     public ServiceResponse getExpenseBookDetails(long id) {
-        mExpenseBookRepository.getExpenseBookDetails(id);
+       // mExpenseBookRepository.getExpenseBookDetails(id);
         return null;
     }
 
     public ServiceResponse getExpenseBookList(String memberEmailId) {
-        mExpenseBookRepository.getExpenseBookListByMemberEmail(memberEmailId);
+        //mExpenseBookRepository.getExpenseBook(memberEmailId);
         return null;
     }
 
     public ServiceResponse deleteMember(long id) {
-        mExpenseBookRepository.deleteMember(id);
+        //mExpenseBookRepository.deleteMember(id);
         return null;
     }
 
     @Override
     public ServiceResponse deleteExpenseBook(long id) {
-        mExpenseBookRepository.deleteExpenseBook(id);
+        //mExpenseBookRepository.deleteExpenseBook(id);
         return null;
     }
 
@@ -83,7 +84,7 @@ public class ExpenseBookServiceImpl implements IExpenseBookService {
     }
 
     public ServiceResponse getExpenseBookList(long memberId) {
-        mExpenseBookRepository.getExpenseBookListByMemberId(memberId);
+        //mExpenseBookRepository.getExpenseBook(memberId);
         return null;
     }
 

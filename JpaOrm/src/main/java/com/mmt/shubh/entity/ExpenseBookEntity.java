@@ -1,5 +1,6 @@
 package com.mmt.shubh.entity;
 
+import jdk.nashorn.internal.objects.annotations.Constructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.pojomatic.Pojomatic;
@@ -14,8 +15,8 @@ import java.util.Set;
  * <p>
  * TODO: Add class comments
  */
-@Table(name = "EXPENSE_BOOK")
 @Entity
+@Table(name = "EXPENSE_BOOK")
 @Getter
 @Setter
 public class ExpenseBookEntity extends AbstractEntity {
@@ -61,4 +62,6 @@ public class ExpenseBookEntity extends AbstractEntity {
 
     }
 
+    public ExpenseBookEntity() {
+    }
 }

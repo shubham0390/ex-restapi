@@ -61,7 +61,7 @@ public class MemberResourceImpl implements IMemberResource {
 
     @Override
     public Member getMember(String emailId) {
-        return null;
+        return new Member();
     }
 
     @Override
