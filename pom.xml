@@ -7,7 +7,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>Repositry</module>
-        <module>ORM</module>
+        <module>JpaOrm</module>
         <module>RestModels</module>
         <module>GCMService</module>
         <module>Service</module>
