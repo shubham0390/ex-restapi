@@ -24,14 +24,20 @@ import java.util.List;
 public class MemberRepositoryImpl extends BaseRepository<MemberEntity> implements IMemberRepository {
 
 
-    public void updateMember(MemberEntity memberEntity) {
+    public MemberEntity updateMember(MemberEntity memberEntity) {
+        log.debug("UPDATE MEMBER STARTS");
         try {
             MemberEntity memberEntity1 = update(memberEntity);
+            log.debug("UPDATE MEMBER END");
+            return memberEntity1;
         } catch (IllegalArgumentException e) {
+            log.debug(e.getMessage());
             throw new InvalidEntityException(e.getMessage());
         } catch (TransactionRequiredException e) {
+            log.debug(e.getMessage());
             throw new UnrecoverableException(e.getMessage());
         } catch (PersistenceException exception) {
+            log.debug(exception.getMessage());
             throw new UnrecoverableException(exception.getMessage());
         }
     }
@@ -41,19 +47,26 @@ public class MemberRepositoryImpl extends BaseRepository<MemberEntity> implement
     }
 
     public void deleteMemberByEmailId(String emailId) {
-       // delete(findByColumnNameAndStringValue(Member_.memberEmail, emailId));
+        // delete(findByColumnNameAndStringValue(Member_.memberEmail, emailId));
     }
 
-    public void registerMember(MemberEntity member) {
+    public MemberEntity createMember(MemberEntity member) {
+        log.debug("CREATE MEMBER STARTS");
         try {
             create(member);
+            log.debug("CREATE MEMBER STARTS");
+            return member;
         } catch (EntityExistsException e) {
-            throw new DuplicateEntityException(e.getMessage());
+            log.debug(e.getMessage());
+            throw new DuplicateEntityException("Member already exits with following email " + member.getMemberEmail());
         } catch (IllegalArgumentException e) {
-            throw new InvalidEntityException(e.getMessage());
+            log.debug(e.getMessage());
+            throw new InvalidEntityException("Invalid Member data");
         } catch (TransactionRequiredException e) {
+            log.debug(e.getMessage());
             throw new UnrecoverableException(e.getMessage());
         } catch (PersistenceException exception) {
+            log.debug(exception.getMessage());
             throw new UnrecoverableException(exception.getMessage());
         }
 

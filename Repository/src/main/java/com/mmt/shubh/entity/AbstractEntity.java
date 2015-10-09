@@ -15,6 +15,7 @@ import java.io.Serializable;
 @MappedSuperclass
 @Getter
 public class AbstractEntity implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "ID")

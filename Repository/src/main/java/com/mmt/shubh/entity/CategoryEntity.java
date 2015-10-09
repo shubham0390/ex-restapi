@@ -4,6 +4,7 @@ package com.mmt.shubh.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 @Getter
 @Entity
 @Setter
+@AutoProperty
 public class CategoryEntity extends AbstractEntity {
 
     @Column(name = "name", nullable = false)

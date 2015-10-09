@@ -20,13 +20,13 @@ import java.util.List;
 @Scope(value = "singleton")
 public interface IMemberRepository {
 
-    void updateMember(MemberEntity memberEntity);
+    MemberEntity updateMember(MemberEntity memberEntity);
 
     void deleteMember(long id);
 
     void deleteMemberByEmailId(String emailId);
 
-    void registerMember(MemberEntity member) throws DuplicateEntityException
+    MemberEntity createMember(MemberEntity member) throws DuplicateEntityException
             , InvalidEntityException, UnrecoverableException;
 
     List<MemberEntity> getMembersByExpenseBook(long expenseBookId);

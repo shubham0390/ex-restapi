@@ -1,7 +1,5 @@
 package com.mmt.shubh.rest.model;
 
-import java.util.List;
-
 /**
  * Created by Subham Tyagi
  * On 6/10/2015.
@@ -9,6 +7,7 @@ import java.util.List;
  * TODO: Add class comments
  */
 public class Expense {
+
     private long id;
 
     private String amount;

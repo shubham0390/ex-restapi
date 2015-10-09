@@ -2,6 +2,7 @@ package com.mmt.shubh.rest.providers;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Context;
@@ -19,14 +20,17 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @Slf4j
 public class ExpenseManagerExceptionMapper implements ExceptionMapper<Exception> {
+
     @Context
     HttpHeaders httpHeaders;
+
+    @Inject
+    ExceptionMapperDeligator mDeligator;
 
     @Override
     public Response toResponse(Exception exception) {
 
         log.debug("Responding with this exception" + exception.getMessage());
-
         if (exception.getClass().equals(javax.ws.rs.WebApplicationException.class)) {
             javax.ws.rs.WebApplicationException e = (javax.ws.rs.WebApplicationException) exception;
             return Response
@@ -52,10 +56,7 @@ public class ExpenseManagerExceptionMapper implements ExceptionMapper<Exception>
                     .type(httpHeaders.getMediaType())
                     .build();
         } else {
-            return Response.status(500)
-                    .entity("Internal Server error . Something went wrong")
-                    .type(httpHeaders.getMediaType())
-                    .build();
+            return mDeligator.deligateException(exception);
         }
     }
 }

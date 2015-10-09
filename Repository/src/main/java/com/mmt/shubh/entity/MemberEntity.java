@@ -3,6 +3,7 @@ package com.mmt.shubh.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,13 +19,13 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@AutoProperty
 public class MemberEntity extends AbstractEntity{
-
 
     @Column(name = "member_name", nullable = false)
     private String memberName;
 
-    @Column(name = "member_email", nullable = false)
+    @Column(name = "member_email", nullable = false,unique = true)
     private String memberEmail;
 
     @Column(name = "user_password")

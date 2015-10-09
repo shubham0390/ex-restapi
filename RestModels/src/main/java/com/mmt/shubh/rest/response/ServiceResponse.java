@@ -1,5 +1,6 @@
 package com.mmt.shubh.rest.response;
 
+import com.mmt.shubh.rest.model.Member;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,17 +18,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Setter
 @Data
 @XmlRootElement
-public abstract class ServiceResponse {
-    protected boolean sucsess;
-    protected int status;
-    protected Object payload;
+public abstract class ServiceResponse<T> extends Member {
 
-    public boolean isSucsess() {
-        return sucsess;
+    protected boolean success;
+
+    protected int status;
+
+    protected T payload;
+
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setSucsess(boolean sucsess) {
-        this.sucsess = sucsess;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     public int getStatus() {
@@ -38,11 +42,11 @@ public abstract class ServiceResponse {
         this.status = status;
     }
 
-    public Object getPayload() {
+    public T getPayload() {
         return payload;
     }
 
-    public void setPayload(Object payload) {
+    public void setPayload(T payload) {
         this.payload = payload;
     }
 }

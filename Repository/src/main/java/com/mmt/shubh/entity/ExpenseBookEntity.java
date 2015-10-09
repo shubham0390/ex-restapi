@@ -3,6 +3,7 @@ package com.mmt.shubh.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Table(name = "EXPENSE_BOOK")
 @Getter
 @Setter
+@AutoProperty
 public class ExpenseBookEntity extends AbstractEntity {
 
     @Column(nullable = false)

@@ -1,7 +1,6 @@
 package com.mmt.shubh.service.device;
 
 import com.mmt.shubh.rest.model.DeviceDetails;
-import com.mmt.shubh.rest.response.ServiceResponse;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,17 +9,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class DeviceServiceImpl implements IDeviceService {
     @Override
-    public ServiceResponse updateGCMToken(DeviceDetails deviceDetails, String emailId) {
+    public String updateGCMToken(String gcmToken, String emailId) {
         return null;
     }
 
     @Override
-    public ServiceResponse updateDevice(DeviceDetails deviceDetails, String emailId) {
+    public DeviceDetails updateDevice(DeviceDetails deviceDetails, String emailId) {
         return null;
     }
 
     @Override
-    public ServiceResponse deleteDevice(String details, String emailId) {
+    public String deleteDevice(String details, String emailId) {
+        return null;
+    }
+
+    @Override
+    public DeviceDetails addDevice(String emailId, DeviceDetails deviceDetails) {
         return null;
     }
 }

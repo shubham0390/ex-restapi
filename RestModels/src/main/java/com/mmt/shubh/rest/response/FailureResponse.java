@@ -10,6 +10,6 @@ package com.mmt.shubh.rest.response;
 
 public class FailureResponse extends ServiceResponse {
     public FailureResponse() {
-        setSucsess(false);
+        setSuccess(false);
     }
 }

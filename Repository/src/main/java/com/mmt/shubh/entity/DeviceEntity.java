@@ -2,6 +2,7 @@ package com.mmt.shubh.entity;
 
 import lombok.Getter;
 import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 import javax.persistence.*;
 
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @Table(name = "DEVICE")
 @Entity
 @Getter
+@AutoProperty
 public class DeviceEntity extends AbstractEntity  {
 
     @Id

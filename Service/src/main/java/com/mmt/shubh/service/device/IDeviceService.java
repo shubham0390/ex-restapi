@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public interface IDeviceService {
     
-    ServiceResponse updateGCMToken(DeviceDetails deviceDetails, String emailId);
-    ServiceResponse updateDevice(DeviceDetails deviceDetails, String emailId);
+    String updateGCMToken(String gcmToken, String emailId);
+    DeviceDetails updateDevice(DeviceDetails deviceDetails, String emailId);
 
-    ServiceResponse deleteDevice(String details, String emailId);
+    String deleteDevice(String details, String emailId);
+
+    DeviceDetails addDevice(String emailId, DeviceDetails deviceDetails);
 }

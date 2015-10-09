@@ -1,19 +1,17 @@
 package com.mmt.shubh.rest.resources.member;
 
-import com.mmt.shubh.rest.ServiceResponseConverter;
 import com.mmt.shubh.rest.model.DeviceDetails;
 import com.mmt.shubh.rest.model.Member;
-import com.mmt.shubh.rest.response.ServiceResponse;
 import com.mmt.shubh.service.device.IDeviceService;
 import com.mmt.shubh.service.member.IMemberService;
 import com.mmt.shubh.service.member.MemberServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
@@ -29,69 +27,57 @@ public class MemberResourceImpl implements IMemberResource {
 
     @Qualifier("memberServiceImpl")
     @Autowired(required = true)
-    private IMemberService mMemberService =  new MemberServiceImpl();
-
-    @Autowired
-    private ServiceResponseConverter mResponseConverter;
+    private IMemberService mMemberService = new MemberServiceImpl();
 
     @Qualifier("deviceServiceImpl")
     @Autowired
     private IDeviceService mDeviceService;
 
-    @Context
-    HttpHeaders mHttpHeaders;
-
     @Override
-    public Response registerMember(Member member) {
-        ServiceResponse response = mMemberService.registerMember(member);
-        return mResponseConverter.toRestResponse(response);
-        //return null;
+    public Member registerMember(Member member) {
+        return mMemberService.registerMember(member);
     }
 
     @Override
-    public Response updateMember(Member member) {
-        return null;
+    public Member updateMember(Member member) {
+        return mMemberService.updateMember(member);
     }
 
 
     @Override
-    public Response updateGCMToken(String GCMToken, String emailId) {
-        return null;
+    public String updateGCMToken(String GCMToken, String emailId) {
+        return mDeviceService.updateGCMToken(GCMToken, emailId);
+    }
+
+    @Override
+    public DeviceDetails addDevice(@NotNull @Email String emailId, DeviceDetails deviceDetails) {
+        return mDeviceService.addDevice(emailId, deviceDetails);
     }
 
     @Override
     public Member getMember(String emailId) {
-        return new Member();
+        return mMemberService.getMember(emailId);
     }
 
     @Override
-    public Response getMembers(long expenseBookId) {
-        return null;
-    }
-
-    @Override
-    public Response updateDevice(String emailId, DeviceDetails deviceDetails) {
-        /*ServiceResponse response = mDeviceService.updateDevice(httpHeaders, emailId);
-        return mResponseConverter.toRestResponse(response);*/
-        return null;
+    public DeviceDetails updateDevice(String emailId, DeviceDetails deviceDetails) {
+        return mDeviceService.updateDevice(deviceDetails, emailId);
     }
 
 
     @Override
-    public Response deleteDevice(String detailsUUID, String emailId) {
-        ServiceResponse response = mDeviceService.deleteDevice(detailsUUID, emailId);
-        return mResponseConverter.toRestResponse(response);
+    public String deleteDevice(String deviceUUID, String emailId) {
+        return mDeviceService.deleteDevice(deviceUUID, emailId);
     }
 
     @Override
-    public Response deleteMember(String emailId) {
-        ServiceResponse response = mMemberService.deleteMember(emailId);
-        return mResponseConverter.toRestResponse(response);
+    public String deleteMember(String emailId) {
+        return mMemberService.deleteMember(emailId);
     }
 
     @Override
     public List<Member> getExpenseBookMembers(long expenseBookId) {
-        return null;
+        return mMemberService.getExpenseBookMember(expenseBookId);
     }
 
     @Override

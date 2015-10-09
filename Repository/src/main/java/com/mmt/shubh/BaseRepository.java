@@ -1,20 +1,18 @@
 package com.mmt.shubh;
 
-import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.*;
+import java.io.Serializable;
+import java.util.List;
 
 public abstract class BaseRepository<T extends Serializable> {
 
-    private Class<T> clazz;
-
     @PersistenceContext
     protected EntityManager entityManager;
+    private Class<T> clazz;
 
     public final void setClazz(final Class<T> clazzToSet) {
         this.clazz = clazzToSet;

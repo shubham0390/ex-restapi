@@ -7,10 +7,10 @@ package com.mmt.shubh.rest.response;
  * TODO: Add class comments
  */
 
-public class SuccessResponse extends ServiceResponse {
+public class SuccessResponse<T> extends ServiceResponse<T> {
 
     public SuccessResponse() {
-        setSucsess(true);
+        setSuccess(true);
         setStatus(200);
     }
 }

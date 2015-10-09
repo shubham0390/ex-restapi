@@ -1,20 +1,16 @@
 package com.mmt.shubh.service.member;
 
 import com.mmt.shubh.entity.MemberEntity;
-import com.mmt.shubh.exception.DuplicateEntityException;
-import com.mmt.shubh.exception.InvalidEntityException;
-import com.mmt.shubh.exception.UnrecoverableException;
 import com.mmt.shubh.repository.member.IMemberRepository;
-import com.mmt.shubh.rest.model.DeviceDetails;
 import com.mmt.shubh.rest.model.Member;
-import com.mmt.shubh.rest.response.ServiceResponse;
-import com.mmt.shubh.rest.response.SuccessResponse;
 import com.mmt.shubh.service.converter.EntityModelConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by Subham Tyagi
@@ -35,54 +31,32 @@ public class MemberServiceImpl implements IMemberService {
     @Autowired
     EntityModelConverter<MemberEntity, Member> mEntityModelConverter;
 
-    public ServiceResponse updateMember(Member member) {
-        ServiceResponse serviceResponse = null;
-        try {
-            mMemberRepository.updateMember(mEntityModelConverter.toEntity(member));
-            serviceResponse = new SuccessResponse();
-        } catch (Exception e) {
-
-        }
-        return serviceResponse;
+    public Member updateMember(Member member) {
+        MemberEntity memberEntity = mMemberRepository.updateMember(mEntityModelConverter.toEntity(member));
+        return mEntityModelConverter.toModel(memberEntity);
     }
 
-    public ServiceResponse deleteMember(long id) {
+    public long deleteMember(long id) {
+        return 0;
+    }
+
+    public Member getMember(String emailId) {
         return null;
     }
 
-    public ServiceResponse updateGCMToken(DeviceDetails deviceDetails, String emailId) {
+    public Member registerMember(Member member) {
+        log.debug("REGISTER MEMBER STARTS");
+        MemberEntity memberEntity = mMemberRepository.createMember(mEntityModelConverter.toEntity(member));
+        log.debug("REGISTER MEMBER END");
+        return mEntityModelConverter.toModel(memberEntity);
+    }
+
+    public String deleteMember(String emailId) {
         return null;
     }
 
-    public ServiceResponse getMember(String emailId) {
-        return null;
-    }
-
-    public ServiceResponse registerMember(Member member) {
-        ServiceResponse serviceResponse = null;
-        try {
-            mMemberRepository.registerMember(mEntityModelConverter.toEntity(member));
-            serviceResponse = new SuccessResponse();
-            serviceResponse.setPayload("Member registered successfully with emailId" + member.getMemberEmail());
-        } catch (DuplicateEntityException e) {
-            e.printStackTrace();
-        } catch (InvalidEntityException e) {
-            e.printStackTrace();
-        } catch (UnrecoverableException e) {
-            e.printStackTrace();
-        }
-        return serviceResponse;
-    }
-
-    public ServiceResponse updateDevice(DeviceDetails deviceDetails, String emailId) {
-        return null;
-    }
-
-    public ServiceResponse deleteDevice(DeviceDetails details, String emailId) {
-        return null;
-    }
-
-    public ServiceResponse deleteMember(String emailId) {
+    @Override
+    public List<Member> getExpenseBookMember(long expenseBookId) {
         return null;
     }
 }

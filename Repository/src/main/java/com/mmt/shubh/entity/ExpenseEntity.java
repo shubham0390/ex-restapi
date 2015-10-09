@@ -3,6 +3,7 @@ package com.mmt.shubh.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 import javax.persistence.*;
 
@@ -16,6 +17,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@AutoProperty
 public class ExpenseEntity extends AbstractEntity {
 
 
