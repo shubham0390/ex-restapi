@@ -35,7 +35,7 @@ public class ExpenseManagerExceptionMapper implements ExceptionMapper<Exception>
             javax.ws.rs.WebApplicationException e = (javax.ws.rs.WebApplicationException) exception;
             return Response
                     .status(e.getResponse().getStatus())
-                    .entity("Unknown error")
+                    .entity(e.getMessage())
                     .type(httpHeaders.getMediaType())
                     .build();
         } else if (exception.getClass().equals(com.fasterxml.jackson.core.JsonParseException.class)) {

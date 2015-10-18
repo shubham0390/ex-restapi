@@ -50,7 +50,8 @@ public abstract class BaseRepository<T extends Serializable> {
         delete(entity);
     }
 
-    public T findByColumnNameAndStringValue(SingularAttribute<T, String> attribute, String value) {
+    public T findByColumnNameAndStringValue(SingularAttribute<T, String> attribute, String value)
+            throws NoResultException, NonUniqueResultException {
         CriteriaBuilder queryBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> q = queryBuilder.createQuery(clazz);
         Metamodel m = entityManager.getMetamodel();
@@ -61,7 +62,20 @@ public abstract class BaseRepository<T extends Serializable> {
         return entityManager.createQuery(q).getSingleResult();
     }
 
-    public T findByColumnNameAndIntValue(SingularAttribute<T, Integer> attribute, int value) {
+    public List<T> findListByColumnNameAndStringValue(SingularAttribute<T, String> attribute, String value)
+            throws NoResultException, NonUniqueResultException {
+        CriteriaBuilder queryBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> q = queryBuilder.createQuery(clazz);
+        Metamodel m = entityManager.getMetamodel();
+        EntityType<T> Pet_ = m.entity(clazz);
+        Root<T> c = q.from(Pet_);
+        q.select(c);
+        q.where(queryBuilder.equal(c.get(attribute), value));
+        return entityManager.createQuery(q).getResultList();
+    }
+
+    public T findByColumnNameAndIntValue(SingularAttribute<T, Integer> attribute, int value)
+            throws NoResultException, NonUniqueResultException {
         CriteriaBuilder queryBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> q = queryBuilder.createQuery(clazz);
         Metamodel m = entityManager.getMetamodel();
@@ -72,7 +86,8 @@ public abstract class BaseRepository<T extends Serializable> {
         return entityManager.createQuery(q).getSingleResult();
     }
 
-    public T findByColumnNameAndLongValue(SingularAttribute<T, Long> attribute, Long value) {
+    public T findByColumnNameAndLongValue(SingularAttribute<T, Long> attribute, Long value)
+            throws NoResultException, NonUniqueResultException {
         CriteriaBuilder queryBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> q = queryBuilder.createQuery(clazz);
         Metamodel m = entityManager.getMetamodel();
@@ -83,7 +98,8 @@ public abstract class BaseRepository<T extends Serializable> {
         return entityManager.createQuery(q).getSingleResult();
     }
 
-    public T findByColumnNameAndStringValue(CollectionAttribute<T, String> attribute, String value) {
+    public T findByColumnNameAndStringValue(CollectionAttribute<T, String> attribute, String value)
+            throws NoResultException, NonUniqueResultException {
         CriteriaBuilder queryBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> q = queryBuilder.createQuery(clazz);
         Metamodel m = entityManager.getMetamodel();
@@ -94,7 +110,8 @@ public abstract class BaseRepository<T extends Serializable> {
         return entityManager.createQuery(q).getSingleResult();
     }
 
-    public T findByColumnNameAndStringValue(ListAttribute<T, String> attribute, String value) {
+    public T findByColumnNameAndStringValue(ListAttribute<T, String> attribute, String value)
+            throws NoResultException, NonUniqueResultException {
         CriteriaBuilder queryBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> q = queryBuilder.createQuery(clazz);
         Metamodel m = entityManager.getMetamodel();
@@ -105,7 +122,8 @@ public abstract class BaseRepository<T extends Serializable> {
         return entityManager.createQuery(q).getSingleResult();
     }
 
-    public T findByColumnNameAndStringValue(SetAttribute<T, String> attribute, String value) {
+    public T findByColumnNameAndStringValue(SetAttribute<T, String> attribute, String value)
+            throws NoResultException, NonUniqueResultException {
         CriteriaBuilder queryBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> q = queryBuilder.createQuery(clazz);
         Metamodel m = entityManager.getMetamodel();
@@ -116,7 +134,8 @@ public abstract class BaseRepository<T extends Serializable> {
         return entityManager.createQuery(q).getSingleResult();
     }
 
-    public T findByColumnNameAndStringValue(MapAttribute<T, Object, Object> attribute, String value) {
+    public T findByColumnNameAndStringValue(MapAttribute<T, Object, Object> attribute, String value)
+            throws NoResultException, NonUniqueResultException {
         CriteriaBuilder queryBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> q = queryBuilder.createQuery(clazz);
         Metamodel m = entityManager.getMetamodel();

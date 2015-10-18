@@ -1,12 +1,8 @@
 package com.mmt.shubh.repository.member;
 
 import com.mmt.shubh.entity.MemberEntity;
-import com.mmt.shubh.exception.DuplicateEntityException;
-import com.mmt.shubh.exception.InvalidEntityException;
-import com.mmt.shubh.exception.UnrecoverableException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -16,7 +12,8 @@ import java.util.List;
  * <p>
  * TODO: Add class comments
  */
-@Service
+
+@Repository
 @Scope(value = "singleton")
 public interface IMemberRepository {
 
@@ -26,8 +23,14 @@ public interface IMemberRepository {
 
     void deleteMemberByEmailId(String emailId);
 
-    MemberEntity createMember(MemberEntity member) throws DuplicateEntityException
-            , InvalidEntityException, UnrecoverableException;
+    MemberEntity createMember(MemberEntity member) ;
 
     List<MemberEntity> getMembersByExpenseBook(long expenseBookId);
+
+    MemberEntity getMemberById(long memberId) ;
+
+
+    MemberEntity getMemberByEmail(String emailId);
+
+    List<MemberEntity> createMembers(List<MemberEntity> memberList);
 }

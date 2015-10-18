@@ -4,8 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
+import org.pojomatic.annotations.PojomaticPolicy;
+import org.pojomatic.annotations.Property;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -20,12 +24,18 @@ import java.util.Set;
 @Getter
 @Setter
 @AutoProperty
-public class MemberEntity extends AbstractEntity{
+@SequenceGenerator(name = "member_seq", sequenceName = "member_seq", initialValue = 1, allocationSize = 1)
+public class MemberEntity implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq")
+    @Column(name = "ID")
+    private long id;
 
     @Column(name = "member_name", nullable = false)
     private String memberName;
 
-    @Column(name = "member_email", nullable = false,unique = true)
+    @Column(name = "member_email", nullable = false, unique = true)
     private String memberEmail;
 
     @Column(name = "user_password")
@@ -40,13 +50,19 @@ public class MemberEntity extends AbstractEntity{
     @Column(name = "profile_photo_url")
     private String profilePhotoUrl;
 
+    @Column(name = "registered")
+    private boolean isRegistered;
+
     @ManyToMany(mappedBy = "memberList", fetch = FetchType.LAZY)
-    private Set<ExpenseBookEntity> expenseBook;
+    @Property(policy = PojomaticPolicy.NONE)
+    private Collection<ExpenseBookEntity> expenseBook;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<ExpenseEntity> expense;
+    @ManyToMany(mappedBy = "members", fetch = FetchType.LAZY)
+    @Property(policy = PojomaticPolicy.NONE)
+    private Collection<ExpenseEntity> expense;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "member")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    @Property(policy = PojomaticPolicy.NONE)
     private List<DeviceEntity> deviceEntities;
 
     public MemberEntity() {

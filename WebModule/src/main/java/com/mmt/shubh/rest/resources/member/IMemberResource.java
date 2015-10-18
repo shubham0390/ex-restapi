@@ -53,7 +53,7 @@ public interface IMemberResource {
     @POST
     @Path("/device")
     @Valid
-    DeviceDetails addDevice(@NotNull @Email @QueryParam("emailId") String emailId, DeviceDetails deviceDetails);
+    long addDevice(@NotNull @QueryParam("memberId") long memberId, DeviceDetails deviceDetails);
 
     @PUT
     @Path("/device")
@@ -66,6 +66,9 @@ public interface IMemberResource {
     String deleteDevice(@NotNull @QueryParam("deviceUUID") String detailsUUID,
                         @NotNull @Email @QueryParam("emailId") String emailId);
 
+    @GET
+    @Path("/device")
+    List<DeviceDetails> getMemberDevices(@NotNull @QueryParam("memberId") long memberId);
 
     @GET
     @Path("member/sync/{syncId}/{expenseBookId}")

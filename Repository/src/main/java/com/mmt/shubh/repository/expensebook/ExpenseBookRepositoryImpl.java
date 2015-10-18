@@ -2,11 +2,14 @@ package com.mmt.shubh.repository.expensebook;
 
 import com.mmt.shubh.BaseRepository;
 import com.mmt.shubh.entity.ExpenseBookEntity;
+import com.mmt.shubh.entity.ExpenseBookEntity_;
 import com.mmt.shubh.entity.MemberEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.Metamodel;
 import java.util.List;
 
 /**
@@ -18,53 +21,89 @@ import java.util.List;
 @Component
 public class ExpenseBookRepositoryImpl extends BaseRepository<ExpenseBookEntity> implements IExpenseBookRepository {
 
+    public ExpenseBookRepositoryImpl() {
+        setClazz(ExpenseBookEntity.class);
+    }
+
     @Override
     public void createExpenseBook(ExpenseBookEntity expenseBookEntity) {
         create(expenseBookEntity);
     }
+
 
     @Override
     public void updateExpenseBook(ExpenseBookEntity expenseBookEntity) {
         update(expenseBookEntity);
     }
 
-    /*@Override
-    public void addMember(long id, MemberEntity memberEntity) {
+    @Override
+    public void addMember(String clientId, MemberEntity memberEntity) {
+        ExpenseBookEntity expenseBookEntity = getExpenseBookDetails(clientId);
+        expenseBookEntity.getMemberList().add(memberEntity);
+        updateExpenseBook(expenseBookEntity);
+    }
+
+    @Override
+    public void addMember(ExpenseBookEntity expenseBookEntity, MemberEntity memberEntity) {
+        expenseBookEntity.getMemberList().add(memberEntity);
+        updateExpenseBook(expenseBookEntity);
+    }
+
+    @Override
+    public ExpenseBookEntity getExpenseBookDetails(String clientId) {
+        return findByColumnNameAndStringValue(ExpenseBookEntity_.clientId, clientId);
+    }
+
+    @Override
+    public void deleteMember(String clientId) {
 
     }
 
     @Override
-    public ExpenseBookEntity getExpenseBookDetails(long id) {
-        return findOne(id);
+    public void deleteExpenseBook(String clientId) {
+        delete(getExpenseBookDetails(clientId));
     }
 
     @Override
-    public void deleteMember(long id) {
+    public ExpenseBookEntity getExpenseBookByMember(String clientId, String memberEmail) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ExpenseBookEntity> query = builder.createQuery(ExpenseBookEntity.class);
 
+        Metamodel metamodel = entityManager.getMetamodel();
+        Root<ExpenseBookEntity> entityRoot = query.from(metamodel.entity(ExpenseBookEntity.class));
+        query.select(entityRoot);
+        query.where(
+                builder.and(
+                        builder.equal(
+                                entityRoot.get(ExpenseBookEntity_.clientId), clientId
+                        ),
+                        builder.equal(
+                                entityRoot.get(ExpenseBookEntity_.ownerEmailId), memberEmail
+
+                        )
+                )
+        );
+        return entityManager.createQuery(query).getSingleResult();
     }
 
-    @Override
-    public void deleteExpenseBook(long id) {
-        deleteById(id);
-    }
 
     @Override
     public List<ExpenseBookEntity> getExpenseBook(String memberEmailId) {
-       *//* String s = "SELECT eb FROM ExpenseBookEntity eb " +
-                "INNER JOIN eb.memberList member " +
-                "WHERE member.member_email = :member_email";
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ExpenseBookEntity> query = builder.createQuery(ExpenseBookEntity.class);
 
-        entityManager.cre
-        Query query = session.createQuery(hql);
-        query.setParameterList("tags", tags);
-        query.setInteger("tag_count", tags.length);
-        List<Article> articles = query.list();*//*
-        return null;
+        Metamodel metamodel = entityManager.getMetamodel();
+        Root<ExpenseBookEntity> entityRoot = query.from(metamodel.entity(ExpenseBookEntity.class));
+        query.select(entityRoot);
+        query.where(builder.equal(entityRoot.get(ExpenseBookEntity_.ownerEmailId), memberEmailId)
+
+        );
+        return entityManager.createQuery(query).getResultList();
     }
 
     @Override
     public List<ExpenseBookEntity> getExpenseBook(long memberId) {
         return null;
-    }*/
+    }
 
 }

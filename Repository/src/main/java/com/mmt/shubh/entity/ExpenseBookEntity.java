@@ -4,8 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
+import org.pojomatic.annotations.PojomaticPolicy;
+import org.pojomatic.annotations.Property;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -15,35 +20,56 @@ import java.util.Set;
  * TODO: Add class comments
  */
 @Entity
-@Table(name = "EXPENSE_BOOK")
 @Getter
 @Setter
 @AutoProperty
-public class ExpenseBookEntity extends AbstractEntity {
+@Table(name = "EXPENSE_BOOK")
+
+public class ExpenseBookEntity implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "ID")
+    private long id;
+
+    @Column(nullable = false)
+    private String clientId;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column
     private String profileImagePath;
 
-    @Column(nullable = false)
+    @Column
     private String description;
 
     @Column(nullable = false)
     private String type;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "EXPENSEBOOK_MEMBER",
-            joinColumns =
-            @JoinColumn(name = "EXPENSEBOOK_ID", referencedColumnName = "ID"),
-            inverseJoinColumns =
-            @JoinColumn(name = "MEMBER_ID", referencedColumnName = "ID")
-    )
-    private Set<MemberEntity> memberList;
+    @Column(nullable = false)
+    private String ownerEmailId;
 
-    @OneToMany(mappedBy = "expenseBook", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<ExpenseEntity> expenses;
+    @Column(name = "created_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateTime;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "expensebook_membber",
+            joinColumns =
+            @JoinColumn(name = "expense_book_id", referencedColumnName = "ID"),
+            inverseJoinColumns =
+            @JoinColumn(name = "member_id", referencedColumnName = "ID")
+    )
+    @Property(policy = PojomaticPolicy.NONE)
+    private Collection<MemberEntity> memberList;
+
+    @OneToMany(mappedBy = "expenseBook", fetch = FetchType.LAZY)
+    @Property(policy = PojomaticPolicy.NONE)
+    private Collection<ExpenseEntity> expenses;
+
+    public ExpenseBookEntity() {
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -60,8 +86,5 @@ public class ExpenseBookEntity extends AbstractEntity {
     public String toString() {
         return Pojomatic.toString(this);
 
-    }
-
-    public ExpenseBookEntity() {
     }
 }

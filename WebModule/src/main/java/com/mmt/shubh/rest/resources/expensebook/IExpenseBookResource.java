@@ -18,46 +18,39 @@ import java.util.List;
  */
 @Path("/expensebook")
 @Service
+@Produces("application/json")
+@Consumes("application/json")
 public interface IExpenseBookResource {
 
     @POST
-    @FromJSON
-    Response createExpenseBook(ExpenseBook expenseBook);
+    void createExpenseBook(ExpenseBook expenseBook);
 
     @PUT
-    @FromJSON
-    Response updateExpenseBook(ExpenseBook expenseBook);
-
-    @POST
-    @Path("/member/{expenseBookId}")
-    Response addMember(Member member, @PathParam("expenseBookId") long expenseBookId);
-
-    @POST
-    @Path("/member")
-    @FromJSON
-    Response addMembers(List<Member> memberList, @PathParam("expenseBookId") long expenseBookId);
-
+    void updateExpenseBook(ExpenseBook expenseBook);
 
     @GET
-    @Path("/{expenseBookId}")
-    @ToJSON
-    Response getExpenseBookDetails(@PathParam("expenseBookId") long expenseBookId);
+    ExpenseBook getExpenseBookDetails(@QueryParam("expenseBookId") String clientId);
 
     @GET
-    @ToJSON
-    Response getExpenseBookList(String memberEmailId);
+    List<ExpenseBook> getExpenseBookList(String memberEmailId);
 
     @GET
-    @ToJSON
-    Response getExpenseBookList(long memberId);
+    List<ExpenseBook> getExpenseBookList(long memberId);
 
 
     @DELETE
+    void deleteExpenseBook(@QueryParam("expenseBookId") String clientId);
+
+
+    @POST
     @Path("/member")
-    Response deleteMember(@QueryParam("expenseBookId") long expenseBookId);
+    void addMember(Member member, @QueryParam("expenseBookId") String clientId);
+
+    @POST
+    @Path("/member")
+    void addMembers(List<Member> memberList, @QueryParam("expenseBookId") String clientId);
 
     @DELETE
-    @Path("/{expenseBookId}")
-    Response deleteExpenseBook(@PathParam("expenseBookId") long expenseBookId);
-
+    @Path("/member")
+    void deleteMember(@QueryParam("expenseBookId") String clientId, @QueryParam("memberEmailId") String memberEmailId);
 }

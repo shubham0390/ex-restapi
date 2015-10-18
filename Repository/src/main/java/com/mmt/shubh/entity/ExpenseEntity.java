@@ -4,8 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
+import org.pojomatic.annotations.PojomaticPolicy;
+import org.pojomatic.annotations.Property;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by Subham Tyagi
@@ -13,19 +18,20 @@ import javax.persistence.*;
  * <p>
  * TODO: Add class comments
  */
-@Table(name = "EXPENSE")
+
 @Entity
 @Getter
 @Setter
 @AutoProperty
+@Table(name = "EXPENSE")
 public class ExpenseEntity extends AbstractEntity {
-
 
     @Column(nullable = false)
     private String amount;
 
     @Column(nullable = false)
-    private long date;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
 
     @Column(nullable = false)
     private String name;
@@ -33,30 +39,38 @@ public class ExpenseEntity extends AbstractEntity {
     @Column
     private String description;
 
-    @Column
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private long syncKey;
+    @OneToOne(fetch = FetchType.LAZY,optional = false)
+    @PrimaryKeyJoinColumn
+    private MemberEntity owner;
 
     @ManyToOne
-    @JoinColumn(name = "EXPENSE_BOOK_ID", nullable = false)
+    @JoinColumn(name = "expense_book_id", nullable = false)
+    @Property(policy = PojomaticPolicy.NONE)
     private ExpenseBookEntity expenseBook;
 
     @ManyToOne
-    @JoinColumn(name = "CATEGORY_ID", nullable = false)
+    @JoinColumn(name = "category_id", nullable = false)
+    @Property(policy = PojomaticPolicy.NONE)
     private CategoryEntity category;
 
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_ID", nullable = false)
-    private MemberEntity member;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "member_expense",
+            joinColumns =
+            @JoinColumn(name = "expense_id", referencedColumnName = "ID"),
+            inverseJoinColumns =
+            @JoinColumn(name = "member_id", referencedColumnName = "ID")
+    )
+    @Property(policy = PojomaticPolicy.NONE)
+    private Collection<MemberEntity> members;
 
     @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "EXPENSE_ID", unique = true, nullable = true, insertable = true, updatable = true)
+    @PrimaryKeyJoinColumn
+    @Property(policy = PojomaticPolicy.NONE)
     private AccountTransactionEntity accountTransaction;
 
     @Override
     public boolean equals(Object o) {
         return Pojomatic.equals(this, o);
-
     }
 
     @Override

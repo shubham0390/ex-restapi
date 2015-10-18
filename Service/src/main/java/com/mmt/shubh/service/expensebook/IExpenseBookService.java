@@ -1,9 +1,10 @@
 package com.mmt.shubh.service.expensebook;
 
+import com.mmt.shubh.entity.ExpenseBookEntity;
 import com.mmt.shubh.rest.model.ExpenseBook;
 import com.mmt.shubh.rest.model.Member;
-import com.mmt.shubh.rest.response.ServiceResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,22 +17,27 @@ import java.util.List;
 @Service
 public interface IExpenseBookService {
 
-    ServiceResponse createExpenseBook(ExpenseBook expenseBook);
+    void createExpenseBook(ExpenseBook expenseBook);
 
-    ServiceResponse updateExpenseBook(ExpenseBook expenseBook);
+    void updateExpenseBook(ExpenseBook expenseBook);
 
-    ServiceResponse addMember(long id, Member member);
+    @Transactional
+    void addMember(String clientId, Member member);
 
-    ServiceResponse getExpenseBookDetails(long id);
+    void addMember(ExpenseBookEntity clientId, Member member);
 
-    ServiceResponse getExpenseBookList(String memberEmailId);
+    ExpenseBook getExpenseBookDetails(String clientId);
 
-    ServiceResponse deleteMember(long id);
+    List<ExpenseBook> getExpenseBookList(String memberEmailId);
 
-    ServiceResponse deleteExpenseBook(long id);
+    void deleteMember(String clientId);
 
-    ServiceResponse addMembers(List<Member> memberList, long expenseBookId);
+    void deleteExpenseBook(String clientId);
 
-    ServiceResponse getExpenseBookList(long memberId);
+    void addMembers(List<Member> memberList, String clientId);
+
+    void addMembers(List<Member> memberList, ExpenseBookEntity clientId);
+
+    List<ExpenseBook> getExpenseBookList(long memberId);
 
 }

@@ -1,5 +1,6 @@
 package com.mmt.shubh.service.member;
 
+import com.mmt.shubh.entity.MemberEntity;
 import com.mmt.shubh.exception.DuplicateEntityException;
 import com.mmt.shubh.exception.InvalidEntityException;
 import com.mmt.shubh.exception.UnrecoverableException;
@@ -31,4 +32,10 @@ public interface IMemberService {
     String deleteMember(String emailId);
 
     List<Member> getExpenseBookMember(long expenseBookId);
+
+    List<Member> createMembers(List<Member> memberEntities);
+
+    Member getMemberByEmail(String memberEmail);
+
+    Member createMember(Member memberEntity);
 }

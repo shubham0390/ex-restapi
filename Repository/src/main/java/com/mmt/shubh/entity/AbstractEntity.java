@@ -1,6 +1,7 @@
 package com.mmt.shubh.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.pojomatic.Pojomatic;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.io.Serializable;
  */
 @MappedSuperclass
 @Getter
+@Setter
 public class AbstractEntity implements Serializable {
 
     @Id

@@ -11,7 +11,7 @@
         <append>true</append>
         <File>${user.dir}/logs/expenseManager.log</File>
         <encoder>
-            <pattern>%date %level \(%thread\) [%c] - %message%n</pattern>
+            <pattern>%createdDate %level \(%thread\) [%c] - %message%n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <maxIndex>40</maxIndex>

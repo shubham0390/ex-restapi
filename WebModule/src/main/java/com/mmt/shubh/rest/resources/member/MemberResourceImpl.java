@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,15 +44,14 @@ public class MemberResourceImpl implements IMemberResource {
         return mMemberService.updateMember(member);
     }
 
-
     @Override
     public String updateGCMToken(String GCMToken, String emailId) {
         return mDeviceService.updateGCMToken(GCMToken, emailId);
     }
 
     @Override
-    public DeviceDetails addDevice(@NotNull @Email String emailId, DeviceDetails deviceDetails) {
-        return mDeviceService.addDevice(emailId, deviceDetails);
+    public long addDevice(@NotNull  long memberId, DeviceDetails deviceDetails) {
+        return mDeviceService.addDevice(memberId, deviceDetails);
     }
 
     @Override
@@ -68,6 +68,17 @@ public class MemberResourceImpl implements IMemberResource {
     @Override
     public String deleteDevice(String deviceUUID, String emailId) {
         return mDeviceService.deleteDevice(deviceUUID, emailId);
+    }
+
+    @Override
+    public List<DeviceDetails> getMemberDevices(@NotNull long memberId) {
+        List<DeviceDetails> mDeviceDetailses = new ArrayList<>();
+        DeviceDetails deviceDetails = new DeviceDetails();
+        deviceDetails.setDeviceUUID("afdkasdfkhaskfdhaskdfhfsh");
+        deviceDetails.setGcmToken("ahfdkjhsadjfahsdj");
+        deviceDetails.setId(123456789);
+        mDeviceDetailses.add(deviceDetails);
+        return mDeviceDetailses;
     }
 
     @Override

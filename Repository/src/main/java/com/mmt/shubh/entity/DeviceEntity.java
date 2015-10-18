@@ -1,6 +1,7 @@
 package com.mmt.shubh.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
@@ -15,13 +16,9 @@ import javax.persistence.*;
 @Table(name = "DEVICE")
 @Entity
 @Getter
+@Setter
 @AutoProperty
-public class DeviceEntity extends AbstractEntity  {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
-    private long id;
+public class DeviceEntity extends AbstractEntity {
 
     @Column(name = "device_uuid", nullable = false)
     private String deviceUUID;
@@ -33,33 +30,6 @@ public class DeviceEntity extends AbstractEntity  {
     @JoinColumn(name = "USER_ID", nullable = false)
     private MemberEntity member;
 
-    public static class Builder {
-        private DeviceEntity deviceEntity;
-
-        public Builder() {
-            deviceEntity = new DeviceEntity();
-        }
-
-        public Builder setDeviceUUID(String deviceUUID) {
-            deviceEntity.deviceUUID = deviceUUID;
-            return this;
-        }
-
-        public Builder setId(long id) {
-            deviceEntity.id = id;
-            return this;
-        }
-
-        public Builder setRegistrationToken(String registrationToken) {
-            deviceEntity.registrationToken = registrationToken;
-            return this;
-        }
-
-        public DeviceEntity build() {
-            return deviceEntity;
-        }
-
-    }
     @Override
     public boolean equals(Object o) {
         return Pojomatic.equals(this, o);

@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,61 +24,60 @@ public class ExpenseBookResourceImpl implements IExpenseBookResource {
 
     @Autowired
     @Qualifier(value = "expenseBookServiceImpl")
-    IExpenseBookService mExpenseBookService;
+    private IExpenseBookService mExpenseBookService;
 
     @Override
-    public Response createExpenseBook(ExpenseBook expenseBook) {
+    public void createExpenseBook(ExpenseBook expenseBook) {
         mExpenseBookService.createExpenseBook(expenseBook);
-        return null;
     }
 
     @Override
-    public Response updateExpenseBook(ExpenseBook expenseBook) {
+    public void updateExpenseBook(ExpenseBook expenseBook) {
         mExpenseBookService.updateExpenseBook(expenseBook);
-        return null;
     }
 
     @Override
-    public Response addMember(Member member, long expenseBookId) {
-        mExpenseBookService.addMember(expenseBookId, member);
-        return null;
+    public void addMember(Member member, String clientId) {
+        mExpenseBookService.addMember(clientId, member);
     }
 
     @Override
-    public Response addMembers(List<Member> memberList, long expenseBookId) {
-        mExpenseBookService.addMembers(memberList, expenseBookId);
-        return null;
+    public void addMembers(List<Member> memberList, String clientId) {
+        mExpenseBookService.addMembers(memberList, clientId);
     }
 
 
     @Override
-    public Response getExpenseBookDetails(long id) {
-        mExpenseBookService.getExpenseBookDetails(id);
-        return null;
+    public ExpenseBook getExpenseBookDetails(String id) {
+        ExpenseBook expenseBook = new ExpenseBook();
+        List<Member> members = new ArrayList<>();
+        Member member = new Member();
+        members.add(member);
+        expenseBook.setMemberList(members);
+        expenseBook.setOwnerEmailId("asdfskjadfh@gmail.com");
+        expenseBook.setCreationDate(new Date());
+        return expenseBook;//mExpenseBookService.g
+        // etExpenseBookDetails(id);
     }
 
     @Override
-    public Response getExpenseBookList(String memberEmailId) {
-        mExpenseBookService.getExpenseBookList(memberEmailId);
-        return null;
+    public List<ExpenseBook> getExpenseBookList(String memberEmailId) {
+        return mExpenseBookService.getExpenseBookList(memberEmailId);
     }
 
     @Override
-    public Response getExpenseBookList(long memberId) {
-        mExpenseBookService.getExpenseBookList(memberId);
-        return null;
+    public List<ExpenseBook> getExpenseBookList(long memberId) {
+        return mExpenseBookService.getExpenseBookList(memberId);
     }
 
     @Override
-    public Response deleteMember(long id) {
+    public void deleteMember(String id, String memberEmailId) {
         mExpenseBookService.deleteMember(id);
-        return null;
     }
 
     @Override
-    public Response deleteExpenseBook(long id) {
+    public void deleteExpenseBook(String id) {
         mExpenseBookService.deleteExpenseBook(id);
-        return null;
     }
 
 }

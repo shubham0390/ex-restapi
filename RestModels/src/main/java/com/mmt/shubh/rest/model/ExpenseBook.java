@@ -1,5 +1,11 @@
 package com.mmt.shubh.rest.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.pojomatic.annotations.AutoProperty;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -8,12 +14,20 @@ import java.util.List;
  * <p>
  * TODO: Add class comments
  */
+@Getter
+@Setter
+@AutoProperty
+@XmlRootElement
 public class ExpenseBook {
-    public long id;
-    public String name;
-    public String profileImagePath;
-    public String description;
-    public String type;
-    public long accountId;
-    public List<Member> memberList;
+    private long id;
+    private String clientId;
+    private String name;
+    private String ownerEmailId;
+    private String profileImagePath;
+    private String description;
+    private String type;
+    private long accountId;
+    private List<Member> memberList;
+    private Date creationDate;
+
 }
