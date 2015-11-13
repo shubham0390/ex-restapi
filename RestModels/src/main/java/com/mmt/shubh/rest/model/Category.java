@@ -15,4 +15,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Getter
 @Setter
 public class Category {
+    private long id;
+    private String name;
+    private String type;
+    private Member owner;
 }

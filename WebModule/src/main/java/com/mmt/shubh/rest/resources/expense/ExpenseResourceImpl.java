@@ -1,5 +1,7 @@
 package com.mmt.shubh.rest.resources.expense;
 
+import org.springframework.stereotype.Component;
+
 import javax.ws.rs.core.Response;
 
 /**
@@ -8,6 +10,7 @@ import javax.ws.rs.core.Response;
  * <p>
  * TODO: Add class comments
  */
+@Component
 public class ExpenseResourceImpl implements IExpenseResource {
 
     @Override

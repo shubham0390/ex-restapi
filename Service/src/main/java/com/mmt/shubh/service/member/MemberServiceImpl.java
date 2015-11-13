@@ -106,12 +106,41 @@ public class MemberServiceImpl implements IMemberService {
 
     @Override
     public Member getMemberByEmail(String memberEmail) {
-        return mIEntityModelConverter.toModel(mMemberRepository.getMemberByEmail(memberEmail));
+        MemberEntity memberByEmail = null;
+        try {
+            memberByEmail = mMemberRepository.getMemberByEmail(memberEmail);
+        } catch (NoResultException e) {
+            log.info("Member is not present");
+            throw new WebApplicationException(Response.status(Response.Status.NO_CONTENT).entity("No member present for" +
+                    " following email Id" + memberEmail).build());
+        } catch (EmptyResultDataAccessException e) {
+            log.info("Member is not present");
+            throw new WebApplicationException(Response.status(Response.Status.NO_CONTENT).entity("No member present for" +
+                    " following email Id" + memberEmail).build());
+        }
+        return mIEntityModelConverter.toModel(memberByEmail);
     }
 
     @Override
     public Member createMember(Member member) {
         MemberEntity memberEntity = mMemberRepository.createMember(mIEntityModelConverter.toEntity(member));
         return mIEntityModelConverter.toModel(memberEntity);
+    }
+
+    @Override
+    public Member getMemberById(long memberServerId) {
+        MemberEntity memberByEmail = null;
+        try {
+            memberByEmail = mMemberRepository.getMemberById(memberServerId);
+        } catch (NoResultException e) {
+            log.info("Member is not present");
+            throw new WebApplicationException(Response.status(Response.Status.NO_CONTENT).entity("No member present for" +
+                    " following  Id" + memberServerId).build());
+        } catch (EmptyResultDataAccessException e) {
+            log.info("Member is not present");
+            throw new WebApplicationException(Response.status(Response.Status.NO_CONTENT).entity("No member present for" +
+                    " following  Id" + memberServerId).build());
+        }
+        return mIEntityModelConverter.toModel(memberByEmail);
     }
 }

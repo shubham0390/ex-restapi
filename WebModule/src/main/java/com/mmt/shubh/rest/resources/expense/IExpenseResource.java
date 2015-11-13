@@ -1,11 +1,12 @@
 package com.mmt.shubh.rest.resources.expense;
 
 import com.mmt.shubh.rest.markers.ToJSON;
+import com.mmt.shubh.rest.model.Expense;
+import org.springframework.stereotype.Service;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.*;
+import java.util.List;
+
 
 /**
  * Created by Subham Tyagi
@@ -13,24 +14,30 @@ import javax.ws.rs.core.Response;
  * <p>
  * TODO: Add class comments
  */
+@Service
+@Path("/expense")
 public interface IExpenseResource {
 
-    Response createExpense();
+    @POST
+    void createExpense();
 
-    Response updateExpense();
+    @PUT
+    void updateExpense();
 
-    Response moveExpense(long expenseId, long newExpenseBookId);
-
-    Response getAllExpenses();
-
-    Response syncExpenses(long syncId);
-    @GET
-    @Path("/expense/{expenseBookId}")
-    @ToJSON
-    Response getExpenseList(@PathParam("expenseBookId") long expenseBookId);
+    @PUT
+    void moveExpense(long expenseId, long newExpenseBookId);
 
     @GET
-    @Path("expenses/sync/{syncId}/{expenseBookId}")
+    @Path("/{expenseBookId}")
     @ToJSON
-    Response syncExpenses(@PathParam("expenseBookId") long expenseBookId, @PathParam("syncId") long syncId);
+    void getExpenseList(@PathParam("expenseBookId") long expenseBookId);
+
+    @GET
+    @Path("/sync/{syncId}/{expenseBookId}")
+    @ToJSON
+    void syncExpenses(@PathParam("expenseBookId") long expenseBookId, @PathParam("syncId") long syncId);
+
+    @DELETE
+    @Path("/")
+    void deleteExpense();
 }

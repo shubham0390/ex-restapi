@@ -49,15 +49,7 @@ public class ExpenseBookResourceImpl implements IExpenseBookResource {
 
     @Override
     public ExpenseBook getExpenseBookDetails(String id) {
-        ExpenseBook expenseBook = new ExpenseBook();
-        List<Member> members = new ArrayList<>();
-        Member member = new Member();
-        members.add(member);
-        expenseBook.setMemberList(members);
-        expenseBook.setOwnerEmailId("asdfskjadfh@gmail.com");
-        expenseBook.setCreationDate(new Date());
-        return expenseBook;//mExpenseBookService.g
-        // etExpenseBookDetails(id);
+        return mExpenseBookService.getExpenseBookDetails(id);
     }
 
     @Override
@@ -72,7 +64,7 @@ public class ExpenseBookResourceImpl implements IExpenseBookResource {
 
     @Override
     public void deleteMember(String id, String memberEmailId) {
-        mExpenseBookService.deleteMember(id);
+        mExpenseBookService.deleteMember(id,memberEmailId);
     }
 
     @Override

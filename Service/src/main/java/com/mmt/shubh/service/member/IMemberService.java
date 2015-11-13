@@ -1,11 +1,6 @@
 package com.mmt.shubh.service.member;
 
-import com.mmt.shubh.entity.MemberEntity;
-import com.mmt.shubh.exception.DuplicateEntityException;
-import com.mmt.shubh.exception.InvalidEntityException;
-import com.mmt.shubh.exception.UnrecoverableException;
 import com.mmt.shubh.rest.model.Member;
-import com.mmt.shubh.rest.response.ServiceResponse;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +22,7 @@ public interface IMemberService {
 
     Member getMember(String emailId);
 
-    Member registerMember(Member member) throws DuplicateEntityException, InvalidEntityException, UnrecoverableException;
+    Member registerMember(Member member) ;
 
     String deleteMember(String emailId);
 
@@ -38,4 +33,6 @@ public interface IMemberService {
     Member getMemberByEmail(String memberEmail);
 
     Member createMember(Member memberEntity);
+
+    Member getMemberById(long memberServerId);
 }

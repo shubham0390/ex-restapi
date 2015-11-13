@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.NoResultException;
 import javax.ws.rs.WebApplicationException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
@@ -98,6 +99,7 @@ public class ExpenseBookServiceImpl implements IExpenseBookService {
         return expenseBookEntity;
     }
 
+
     @Transactional
     public void updateExpenseBook(ExpenseBook expenseBook) {
         mExpenseBookRepository.updateExpenseBook(mExpenseBookEntityModelConverter.toEntity(expenseBook));
@@ -112,8 +114,17 @@ public class ExpenseBookServiceImpl implements IExpenseBookService {
         return mExpenseBookEntityModelConverter.toModel(mExpenseBookRepository.getExpenseBook(memberEmailId));
     }
 
-    public void deleteMember(String clientId) {
-        mExpenseBookRepository.deleteMember(clientId);
+    @Transactional
+    public void deleteMember(String clientId, String memberEmailId) {
+        ExpenseBookEntity expenseBookEntity = mExpenseBookRepository.getExpenseBookDetails(clientId);
+        Collection<MemberEntity> collection = expenseBookEntity.getMemberList();
+
+        collection.forEach(memberEntity -> {
+            if (memberEntity.getMemberEmail().equals(memberEmailId)) {
+                collection.remove(memberEntity);
+            }
+        });
+        mExpenseBookRepository.updateExpenseBook(expenseBookEntity);
     }
 
     @Override
@@ -124,7 +135,11 @@ public class ExpenseBookServiceImpl implements IExpenseBookService {
 
     @Override
     public void addMembers(List<Member> memberList, String clientId) {
-
+        List<MemberEntity> memberEntities = createMembers(memberList);
+        //TODO : Handle no expense book present case
+        ExpenseBookEntity expenseBookEntity = mExpenseBookRepository.getExpenseBookDetails(clientId);
+        expenseBookEntity.getMemberList().addAll(memberEntities);
+        addM(expenseBookEntity);
     }
 
     @Override

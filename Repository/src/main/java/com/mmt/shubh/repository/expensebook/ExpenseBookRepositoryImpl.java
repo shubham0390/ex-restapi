@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.Metamodel;
 import java.util.List;
@@ -102,8 +103,22 @@ public class ExpenseBookRepositoryImpl extends BaseRepository<ExpenseBookEntity>
     }
 
     @Override
+    //TODO : learn joins in JPA
     public List<ExpenseBookEntity> getExpenseBook(long memberId) {
-        return null;
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ExpenseBookEntity> query = builder.createQuery(ExpenseBookEntity.class);
+        Metamodel metamodel = entityManager.getMetamodel();
+       String s = "SELECT * FROM expensebookentity where expensebookentity.id in(SELECT expensebook_id FROM expensebook_member " +
+                "where member_id = 2)";
+
+        Root<ExpenseBookEntity> entityRoot = query.from(metamodel.entity(ExpenseBookEntity.class));
+        Join<ExpenseBookEntity,MemberEntity> join = entityRoot.join(ExpenseBookEntity_.memberList);
+
+        query.select(entityRoot);
+        query.where(builder.equal(entityRoot.get(ExpenseBookEntity_.memberList).in(memberId),memberId)
+
+        );
+        return entityManager.createQuery(query).getResultList();
     }
 
 }

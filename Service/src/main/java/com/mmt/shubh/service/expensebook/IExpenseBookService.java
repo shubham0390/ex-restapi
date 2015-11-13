@@ -30,7 +30,7 @@ public interface IExpenseBookService {
 
     List<ExpenseBook> getExpenseBookList(String memberEmailId);
 
-    void deleteMember(String clientId);
+    void deleteMember(String clientId, String memberEmailId);
 
     void deleteExpenseBook(String clientId);
 
