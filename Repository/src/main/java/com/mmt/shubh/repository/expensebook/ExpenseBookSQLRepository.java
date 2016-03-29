@@ -20,9 +20,9 @@ import java.util.List;
  * TODO: Add class comments
  */
 @Component
-public class ExpenseBookRepositoryImpl extends BaseRepository<ExpenseBookEntity> implements IExpenseBookRepository {
+public class ExpenseBookSQLRepository extends BaseRepository<ExpenseBookEntity> implements IExpenseBookRepository {
 
-    public ExpenseBookRepositoryImpl() {
+    public ExpenseBookSQLRepository() {
         setClazz(ExpenseBookEntity.class);
     }
 

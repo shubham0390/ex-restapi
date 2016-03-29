@@ -21,10 +21,10 @@ import java.util.List;
  */
 @Repository(value = "memberRepositoryImpl")
 @Slf4j
-public class MemberRepositoryImpl extends BaseRepository<MemberEntity> implements IMemberRepository {
+public class MemberSQLRepository extends BaseRepository<MemberEntity> implements IMemberRepository {
 
 
-    public MemberRepositoryImpl() {
+    public MemberSQLRepository() {
         setClazz(MemberEntity.class);
     }
 

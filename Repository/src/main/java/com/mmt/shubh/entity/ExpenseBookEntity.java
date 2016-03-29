@@ -24,7 +24,6 @@ import java.util.Set;
 @Setter
 @AutoProperty
 @Table(name = "EXPENSE_BOOK")
-
 public class ExpenseBookEntity implements Serializable {
 
     @Id
@@ -53,6 +52,9 @@ public class ExpenseBookEntity implements Serializable {
     @Column(name = "created_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateTime;
+
+    @Column(name = "active")
+    private boolean isActive;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "expensebook_membber",

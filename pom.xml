@@ -7,9 +7,11 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>Repository</module>
+        <module>Utility</module>
         <module>RestModels</module>
         <module>Service</module>
         <module>WebModule</module>
+
     </modules>
     <packaging>pom</packaging>
 

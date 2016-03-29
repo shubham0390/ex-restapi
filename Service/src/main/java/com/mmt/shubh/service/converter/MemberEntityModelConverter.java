@@ -1,8 +1,12 @@
 package com.mmt.shubh.service.converter;
 
+import com.mmt.shubh.entity.DeviceEntity;
 import com.mmt.shubh.entity.MemberEntity;
+import com.mmt.shubh.rest.model.DeviceDetails;
 import com.mmt.shubh.rest.model.Member;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +24,11 @@ import java.util.List;
 @Scope(value = "singleton")
 public class MemberEntityModelConverter implements IEntityModelConverter<MemberEntity, Member> {
 
+
+    @Autowired
+    @Qualifier(value = "deviceEntityModelConverter")
+    private IEntityModelConverter<DeviceEntity,DeviceDetails> deviceEntityModelConverter;
+
     public MemberEntity toEntity(Member member) {
         log.info("converting memberEntity model to entity ");
         MemberEntity memberEntity = new MemberEntity();
@@ -29,6 +38,7 @@ public class MemberEntityModelConverter implements IEntityModelConverter<MemberE
         memberEntity.setMemberName(member.getMemberName());
         memberEntity.setMemberEmail(member.getMemberEmail());
         memberEntity.setCoverPhotoUrl(member.getCoverPhotoUrl());
+        memberEntity.setDeviceEntities(deviceEntityModelConverter.toEntity(member.getMDeviceDetailsList()));
         return memberEntity;
     }
 
@@ -39,6 +49,7 @@ public class MemberEntityModelConverter implements IEntityModelConverter<MemberE
         member.setMemberName(memberEntity.getMemberName());
         member.setMemberEmail(memberEntity.getMemberEmail());
         member.setCoverPhotoUrl(memberEntity.getCoverPhotoUrl());
+        member.setMDeviceDetailsList(deviceEntityModelConverter.toModel((List<DeviceEntity>) memberEntity.getDeviceEntities()));
         return member;
     }
 

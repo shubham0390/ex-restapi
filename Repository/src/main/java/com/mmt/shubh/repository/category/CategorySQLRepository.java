@@ -19,9 +19,9 @@ import java.util.List;
  * TODO: Add class comments
  */
 @Component
-public class CategoryRepositoryImpl extends BaseRepository<CategoryEntity> implements ICategoryRepository {
+public class CategorySQLRepository extends BaseRepository<CategoryEntity> implements ICategoryRepository {
 
-    public CategoryRepositoryImpl() {
+    public CategorySQLRepository() {
         setClazz(CategoryEntity.class);
     }
 

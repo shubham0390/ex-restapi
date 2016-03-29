@@ -1,9 +1,12 @@
 package com.mmt.shubh.service.member;
 
+import com.mmt.shubh.entity.ExpenseBookEntity;
 import com.mmt.shubh.entity.MemberEntity;
 import com.mmt.shubh.repository.member.IMemberRepository;
+import com.mmt.shubh.rest.model.ExpenseBook;
 import com.mmt.shubh.rest.model.Member;
 import com.mmt.shubh.service.converter.IEntityModelConverter;
+import com.mmt.shubh.service.expensebook.IExpenseBookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.NoResultException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +35,10 @@ public class MemberServiceImpl implements IMemberService {
     @Qualifier("memberRepositoryImpl")
     @Autowired
     IMemberRepository mMemberRepository;
+
+    @Qualifier("expenseBookServiceImpl")
+    @Autowired
+    IExpenseBookService mIExpenseBookService;
 
     @Qualifier("memberEntityModelConverter")
     @Autowired
@@ -78,13 +86,31 @@ public class MemberServiceImpl implements IMemberService {
                 builder.entity("Member already registered. Try to login again");
                 throw new WebApplicationException(builder.build());
             } else {
-                log.debug("Member is already present but not registered. Marking ias registered");
+                log.debug("Member is already present but not registered. Marking as registered");
                 memberEntity.setRegistered(true);
                 mMemberRepository.updateMember(memberEntity);
             }
         }
+
+        createCashAccount(memberEntity);
+        createPersonalAccount(memberEntity);
         log.debug("REGISTER MEMBER END");
         return mIEntityModelConverter.toModel(memberEntity);
+    }
+
+    private void createPersonalAccount(MemberEntity memberEntity) {
+        ExpenseBook expenseBook = new ExpenseBook();
+        expenseBook.setOwnerEmailId(memberEntity.getMemberEmail());
+        expenseBook.setName("Personal");
+        expenseBook.setDescription("This is personal Expense book for" + memberEntity.getDisplayName());
+        // TODO: 2/18/16 add it from enum
+        expenseBook.setType("Personal");
+        expenseBook.setCreationDate(new Date());
+        mIExpenseBookService.createExpenseBook(expenseBook);
+    }
+
+    private void createCashAccount(MemberEntity memberEntity) {
+
     }
 
     public String deleteMember(String emailId) {
@@ -98,9 +124,7 @@ public class MemberServiceImpl implements IMemberService {
 
     @Override
     public List<Member> createMembers(List<Member> members) {
-        members.forEach(member -> {
-            createMember(member);
-        });
+        members.forEach(this::createMember);
         return null;
     }
 

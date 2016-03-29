@@ -2,7 +2,6 @@ package com.mmt.shubh.rest.resources.expense;
 
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.core.Response;
 
 /**
  * Created by Subham Tyagi
@@ -14,37 +13,34 @@ import javax.ws.rs.core.Response;
 public class ExpenseResourceImpl implements IExpenseResource {
 
     @Override
-    public Response createExpense() {
-        return null;
+    public void createExpense() {
+       
     }
 
     @Override
-    public Response updateExpense() {
-        return null;
+    public void updateExpense() {
     }
 
     @Override
-    public Response moveExpense(long expenseId, long newExpenseBookId) {
-        return null;
+    public void moveExpense(long expenseId, long newExpenseBookId) {
+    }
+
+    public void getAllExpenses() {
+    }
+
+    public void syncExpenses(long syncId) {
     }
 
     @Override
-    public Response getAllExpenses() {
-        return null;
+    public void getExpenseList(long expenseBookId) {
     }
 
     @Override
-    public Response syncExpenses(long syncId) {
-        return null;
+    public void syncExpenses(long expenseBookId, long syncId) {
     }
 
     @Override
-    public Response getExpenseList(long expenseBookId) {
-        return null;
-    }
+    public void deleteExpense() {
 
-    @Override
-    public Response syncExpenses(long expenseBookId, long syncId) {
-        return null;
     }
 }

@@ -68,6 +68,10 @@
                     <jvmArgs>-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n
                         -Dorg.eclipse.jetty.LEVEL=INFO -XmX=3GB
                     </jvmArgs>
+                    <httpConnector>
+                        <!--host>localhost</host-->
+                        <port>9999</port>
+                    </httpConnector>
                     <webApp>
                         <webInfIncludeJarPattern>donotscan</webInfIncludeJarPattern>
                         <contextPath>/expensemanager</contextPath>

@@ -53,6 +53,9 @@ public class MemberEntity implements Serializable {
     @Column(name = "registered")
     private boolean isRegistered;
 
+    @Column(name = "active")
+    private boolean isActive;
+
     @ManyToMany(mappedBy = "memberList", fetch = FetchType.LAZY)
     @Property(policy = PojomaticPolicy.NONE)
     private Collection<ExpenseBookEntity> expenseBook;
