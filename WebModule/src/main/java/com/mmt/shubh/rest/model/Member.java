@@ -42,6 +42,10 @@ public class Member {
 
     private List<DeviceDetails> deviceDetailsList;
 
+    private List<ExpenseBook> expenseBooks;
+
+    private List<Account> accounts;
+
     @Override
     public boolean equals(Object o) {
         return Pojomatic.equals(this, o);

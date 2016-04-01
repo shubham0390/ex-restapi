@@ -2,10 +2,15 @@ package com.mmt.shubh.service.member;
 
 import com.mmt.shubh.database.entity.MemberEntity;
 import com.mmt.shubh.database.repository.member.IMemberRepository;
+import com.mmt.shubh.rest.model.Account;
 import com.mmt.shubh.rest.model.ExpenseBook;
 import com.mmt.shubh.rest.model.Member;
+import com.mmt.shubh.service.account.IAccountService;
 import com.mmt.shubh.service.converter.IEntityModelConverter;
 import com.mmt.shubh.service.expensebook.IExpenseBookService;
+import com.mmt.shubh.utility.AccountType;
+import com.mmt.shubh.utility.Constants;
+import com.mmt.shubh.utility.ExpenseBookType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.NoResultException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +44,10 @@ public class MemberServiceImpl implements IMemberService {
     @Qualifier(value = "expenseBookServiceImpl")
     @Autowired
     IExpenseBookService mIExpenseBookService;
+
+    @Qualifier(value = "accountServiceImpl")
+    @Autowired
+    IAccountService mAccountService;
 
     @Qualifier(value = "memberEntityModelConverter")
     @Autowired
@@ -91,25 +101,44 @@ public class MemberServiceImpl implements IMemberService {
             }
         }
 
-        createCashAccount(memberEntity);
-        createPersonalAccount(memberEntity);
+        Account account = createCashAccount(member);
+        ExpenseBook expenseBook = createPersonalExpenseBook(member);
+
+        Member member1 = mIEntityModelConverter.toModel(memberEntity);
+        List<Account> accounts = new ArrayList<>();
+        accounts.add(account);
+        member1.setAccounts(accounts);
+        List<ExpenseBook> expenseBooks = new ArrayList<>();
+        expenseBooks.add(expenseBook);
+        member1.setExpenseBooks(expenseBooks);
+
         log.debug("REGISTER MEMBER END");
-        return mIEntityModelConverter.toModel(memberEntity);
+        return member1;
     }
 
-    private void createPersonalAccount(MemberEntity memberEntity) {
+    private ExpenseBook createPersonalExpenseBook(Member member) {
         ExpenseBook expenseBook = new ExpenseBook();
-        expenseBook.setOwnerEmailId(memberEntity.getMemberEmail());
+        expenseBook.setOwnerEmailId(member.getMemberEmail());
         expenseBook.setName("Personal");
-        expenseBook.setDescription("This is personal Expense book for" + memberEntity.getDisplayName());
-        // TODO: 2/18/16 add it from enum
-        expenseBook.setType("Personal");
+        expenseBook.setDescription("This is personal Expense book for" + member.getDisplayName());
+        expenseBook.setType(ExpenseBookType.PERSONAL.name());
         expenseBook.setCreationDate(new Date());
+        expenseBook.setClientId(member.getMemberName() + 1);
+        List<Member> members = new ArrayList<>();
+        members.add(member);
+        expenseBook.setMemberList(members);
         mIExpenseBookService.createExpenseBook(expenseBook);
+        return expenseBook;
     }
 
-    private void createCashAccount(MemberEntity memberEntity) {
-
+    private Account createCashAccount(Member member) {
+        Account account = new Account();
+        account.setAccountName(Constants.CASH_ACCOUNT_NAME);
+        account.setAccountType(AccountType.CASH.name());
+        account.setAccountBalance(0);
+        account.setMember(member.getMemberEmail());
+        mAccountService.addAccount(account);
+        return account;
     }
 
     public String deleteMember(String emailId) {

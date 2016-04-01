@@ -26,6 +26,4 @@ public interface IAccountRepository {
     void deleteTransaction(long transactionId);
 
     List<AccountTransactionEntity> getAllAccountTransaction(long accountId);
-
-    long addAccount(String memberEmailId, AccountEntity account);
 }

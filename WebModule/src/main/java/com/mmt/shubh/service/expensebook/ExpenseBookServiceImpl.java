@@ -78,15 +78,19 @@ public class ExpenseBookServiceImpl implements IExpenseBookService {
 
     @Transactional
     private List<MemberEntity> createMembers(List<Member> memberList) {
-        List<MemberEntity> memberEntities = new ArrayList<>();
-        mEntityModelConverter.toEntity(memberList).forEach(memberEntity -> {
-            try {
-                memberEntities.add(mMemberRepository.getMemberByEmail(memberEntity.getMemberEmail()));
-            } catch (EmptyResultDataAccessException e) {
-                memberEntities.add(mMemberRepository.createMember(memberEntity));
-            }
-        });
-        return memberEntities;
+        if (memberList == null || memberList.isEmpty()) {
+            throw new WebApplicationException("Invalid Member data");
+        } else {
+            List<MemberEntity> memberEntities = new ArrayList<>();
+            mEntityModelConverter.toEntity(memberList).forEach(memberEntity -> {
+                try {
+                    memberEntities.add(mMemberRepository.getMemberByEmail(memberEntity.getMemberEmail()));
+                } catch (EmptyResultDataAccessException e) {
+                    memberEntities.add(mMemberRepository.createMember(memberEntity));
+                }
+            });
+            return memberEntities;
+        }
     }
 
     private ExpenseBookEntity getExpenseBookEntity(ExpenseBook expenseBook, ExpenseBookEntity expenseBookEntity) {

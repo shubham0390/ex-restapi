@@ -53,8 +53,4 @@ public class AccountSQLRepository implements IAccountRepository {
         return null;
     }
 
-    @Override
-    public long addAccount(String memberEmailId, AccountEntity account) {
-        return 0;
-    }
 }

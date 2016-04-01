@@ -23,12 +23,19 @@ public class AccountEntity extends AbstractEntity {
 
     @Column(name = "account_name", nullable = false)
     private String accountName;
+
     @Column(name = "account_balance", nullable = false)
     private int accountBalance;
+
+    @Column(name = "account_type", nullable = false)
+    private String accountType;
+
     @Column(name = "member_name", nullable = false)
     private MemberEntity member;
+
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<AccountTransactionEntity> expense;
+
     @Override
     public boolean equals(Object o) {
         return Pojomatic.equals(this, o);
@@ -45,4 +52,4 @@ public class AccountEntity extends AbstractEntity {
         return Pojomatic.toString(this);
 
     }
- }
+}

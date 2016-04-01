@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Subham Tyagi
@@ -31,17 +32,25 @@ public class ExpenseBookEntityModelConverter implements IEntityModelConverter<Ex
         return expenseBookEntity;
     }
 
-    public ExpenseBook toModel(ExpenseBookEntity expenseBookEntity) {
-        return null;
+    public ExpenseBook toModel(ExpenseBookEntity expenseBook) {
+        ExpenseBook expenseBookEntity = new ExpenseBook();
+        expenseBookEntity.setClientId(expenseBook.getClientId());
+        expenseBookEntity.setCreationDate(expenseBook.getDateTime());
+        expenseBookEntity.setDescription(expenseBook.getDescription());
+        expenseBookEntity.setName(expenseBook.getName());
+        expenseBookEntity.setType(expenseBook.getType());
+        expenseBookEntity.setOwnerEmailId(expenseBook.getOwnerEmailId());
+        expenseBookEntity.setProfileImagePath(expenseBook.getProfileImagePath());
+        return expenseBookEntity;
     }
 
     @Override
     public List<ExpenseBookEntity> toEntity(List<ExpenseBook> m) {
-        return null;
+        return m.stream().map(this::toEntity).collect(Collectors.toList());
     }
 
     @Override
     public List<ExpenseBook> toModel(List<ExpenseBookEntity> e) {
-        return null;
+        return e.stream().map(this::toModel).collect(Collectors.toList());
     }
 }

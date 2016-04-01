@@ -32,10 +32,10 @@ public interface IExpenseBookResource {
     ExpenseBook getExpenseBookDetails(@QueryParam("expenseBookId") String clientId);
 
     @GET
-    List<ExpenseBook> getExpenseBookList(String memberEmailId);
+    List<ExpenseBook> getExpenseBookList(@QueryParam("memberEmailId") String memberEmailId);
 
     @GET
-    List<ExpenseBook> getExpenseBookList(long memberId);
+    List<ExpenseBook> getExpenseBookList(@PathParam("memberId") long memberId);
 
 
     @DELETE
