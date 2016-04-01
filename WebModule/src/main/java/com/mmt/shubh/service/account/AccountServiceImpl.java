@@ -1,8 +1,11 @@
-package com.mmt.shubh.rest.resources.account;
+package com.mmt.shubh.service.account;
 
+import com.mmt.shubh.database.entity.AccountEntity;
+import com.mmt.shubh.database.repository.account.IAccountRepository;
 import com.mmt.shubh.rest.model.Account;
 import com.mmt.shubh.rest.model.AccountTransaction;
-import com.mmt.shubh.service.account.IAccountService;
+import com.mmt.shubh.service.converter.IEntityModelConverter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -12,16 +15,19 @@ import java.util.List;
 /**
  * Created by subhamtyagi on 2/18/16.
  */
-@Component
-public class AccountResourceImpl implements IAccountResource {
+@Component(value = "accountServiceImpl")
+@Slf4j
+public class AccountServiceImpl implements IAccountService {
 
     @Autowired
-    @Qualifier(value = "accountServiceImpl")
-    IAccountService mAccountService;
+    @Qualifier(value = "accountSQLRepository")
+    private IAccountRepository mAccountRepository;
+
+    private IEntityModelConverter<AccountEntity,Account> mAccountIEntityModelConverter;
 
     @Override
-    public long addAccount(String memberEmailId,Account account) {
-        return mAccountService.addAccount(memberEmailId,account);
+    public long addAccount(String memberEmailId, Account account) {
+        return mAccountRepository.addAccount(memberEmailId,mAccountIEntityModelConverter.toEntity(account));
     }
 
     @Override
@@ -58,4 +64,6 @@ public class AccountResourceImpl implements IAccountResource {
     public List<AccountTransaction> getAllAccountTransaction(long accountId) {
         return null;
     }
+
+
 }

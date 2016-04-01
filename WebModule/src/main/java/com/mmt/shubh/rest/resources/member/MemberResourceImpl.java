@@ -26,11 +26,11 @@ import java.util.List;
 @Service
 public class MemberResourceImpl implements IMemberResource {
 
-    @Qualifier("memberServiceImpl")
+    @Qualifier(value = "memberServiceImpl")
     @Autowired(required = true)
     private IMemberService mMemberService = new MemberServiceImpl();
 
-    @Qualifier("deviceServiceImpl")
+    @Qualifier(value = "deviceServiceImpl")
     @Autowired
     private IDeviceService mDeviceService;
 
@@ -50,7 +50,7 @@ public class MemberResourceImpl implements IMemberResource {
     }
 
     @Override
-    public long addDevice(@NotNull  long memberId, DeviceDetails deviceDetails) {
+    public long addDevice(@NotNull long memberId, DeviceDetails deviceDetails) {
         return mDeviceService.addDevice(memberId, deviceDetails);
     }
 
