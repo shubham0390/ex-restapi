@@ -16,7 +16,7 @@ import java.util.List;
 public interface IAccountResource {
 
     @POST
-    long addAccount(@NotNull @QueryParam("memberEmail") String memberEmailId, Account account);
+    long addAccount(Account account);
 
     @DELETE
     @Path("/{accountId}")

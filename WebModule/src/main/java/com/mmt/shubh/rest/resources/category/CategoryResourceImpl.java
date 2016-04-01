@@ -18,7 +18,7 @@ import java.util.List;
 @Component
 public class CategoryResourceImpl implements ICategoryResource {
 
-    @Qualifier("categoryServiceImpl")
+    @Qualifier(value = "categoryServiceImpl")
     @Autowired
     private ICategoryService mCategoryService;
 

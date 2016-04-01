@@ -16,12 +16,12 @@ import java.util.List;
 public class AccountResourceImpl implements IAccountResource {
 
     @Autowired
-    @Qualifier("accountServiceImpl")
+    @Qualifier(value = "accountServiceImpl")
     IAccountService mAccountService;
 
     @Override
-    public long addAccount(String memberEmailId,Account account) {
-        return mAccountService.addAccount(memberEmailId,account);
+    public long addAccount(Account account) {
+        return mAccountService.addAccount(account);
     }
 
     @Override
