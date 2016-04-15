@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public interface IAccountService {
 
-    long addAccount(Account account);
+    void addAccount(Account account);
 
     void deleteAccount(long accountId,String memberEmailId);
 

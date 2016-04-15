@@ -1,5 +1,6 @@
 package com.mmt.shubh.database.repository.account;
 
+import com.mmt.shubh.database.BaseRepository;
 import com.mmt.shubh.database.entity.AccountEntity;
 import com.mmt.shubh.database.entity.AccountTransactionEntity;
 import org.springframework.stereotype.Component;
@@ -11,11 +12,11 @@ import java.util.List;
  */
 
 @Component(value = "accountSQLRepository")
-public class AccountSQLRepository implements IAccountRepository {
+public class AccountSQLRepository extends BaseRepository<AccountEntity> implements IAccountRepository {
 
     @Override
-    public long addAccount(AccountEntity accountEntity) {
-        return 0;
+    public void addAccount(AccountEntity accountEntity) {
+        create(accountEntity);
     }
 
     @Override

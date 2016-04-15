@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Service
 public interface IAccountRepository {
-    long addAccount(AccountEntity accountEntity);
+    void addAccount(AccountEntity accountEntity);
 
     void deleteAccount(long accountId,String memberEmailId);
 

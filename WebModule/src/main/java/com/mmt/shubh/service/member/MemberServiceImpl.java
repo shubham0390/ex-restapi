@@ -120,7 +120,7 @@ public class MemberServiceImpl implements IMemberService {
         ExpenseBook expenseBook = new ExpenseBook();
         expenseBook.setOwnerEmailId(member.getMemberEmail());
         expenseBook.setName("Personal");
-        expenseBook.setDescription("This is personal Expense book for" + member.getDisplayName());
+        expenseBook.setDescription("This is personal Expense book for " + member.getMemberName());
         expenseBook.setType(ExpenseBookType.PERSONAL.name());
         expenseBook.setCreationDate(new Date());
         expenseBook.setClientId(member.getMemberName() + 1);
@@ -194,5 +194,41 @@ public class MemberServiceImpl implements IMemberService {
                     " following  Id" + memberServerId).build());
         }
         return mIEntityModelConverter.toModel(memberByEmail);
+    }
+
+    @Override
+    public String generateAccessToken(String memberEmail) {
+        return null;
+    }
+
+    @Override
+    public String login(Member member) {
+        String memberEmail = member.getMemberEmail();
+        boolean isRegistered = false;
+
+        MemberEntity memberEntity = null;
+        try {
+            memberEntity = mMemberRepository.getMemberByEmail(memberEmail);
+        } catch (NoResultException e) {
+            log.info("Member is not present");
+
+        } catch (EmptyResultDataAccessException e) {
+            log.info("Member is not present");
+        }
+
+        if (memberEntity != null) {
+            isRegistered = memberEntity.isRegistered();
+        }
+
+        if (!isRegistered) {
+            throw new WebApplicationException(Response.status(Response.Status.NO_CONTENT).entity("No member Registered  with following id. " +
+                    " following email Id" + memberEmail).build());
+        }
+        return generateAccessToken(memberEmail);
+    }
+
+    @Override
+    public void logout(String emailId) {
+
     }
 }

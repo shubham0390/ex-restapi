@@ -39,11 +39,11 @@ public class AccountServiceImpl implements IAccountService {
     IEntityModelConverter<MemberEntity, Member> mEntityModelConverter;
 
     @Override
-    public long addAccount(Account account) {
+    public void addAccount(Account account) {
         AccountEntity accountEntity = mAccountIEntityModelConverter.toEntity(account);
         Member member = mMemberService.getMemberByEmail(account.getMember());
         accountEntity.setMember(mEntityModelConverter.toEntity(member));
-        return mAccountRepository.addAccount(accountEntity);
+        mAccountRepository.addAccount(accountEntity);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.mmt.shubh.rest.resources.member;
 
+import com.mmt.shubh.rest.ApiResult;
 import com.mmt.shubh.rest.model.DeviceDetails;
 import com.mmt.shubh.rest.model.Member;
 import org.hibernate.validator.constraints.Email;
@@ -79,4 +80,12 @@ public interface IMemberResource {
     @Path("/demo")
     @Produces("text/plain")
     String getDemo();
+
+    @PUT
+    @Path("/login")
+    ApiResult login(Member member);
+
+    @PUT
+    @Path("/logout")
+    void logout(String emailId);
 }

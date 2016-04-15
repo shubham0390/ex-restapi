@@ -16,7 +16,7 @@ import java.util.List;
 public interface IAccountResource {
 
     @POST
-    long addAccount(Account account);
+    void addAccount(Account account);
 
     @DELETE
     @Path("/{accountId}")

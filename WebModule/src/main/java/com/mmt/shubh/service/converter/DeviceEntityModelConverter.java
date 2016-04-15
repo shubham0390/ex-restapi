@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Subham Tyagi
@@ -33,11 +34,11 @@ public class DeviceEntityModelConverter implements IEntityModelConverter<DeviceE
 
     @Override
     public List<DeviceEntity> toEntity(List<DeviceDetails> m) {
-        return null;
+        return m.stream().map(this::toEntity).collect(Collectors.toList());
     }
 
     @Override
     public List<DeviceDetails> toModel(List<DeviceEntity> e) {
-        return null;
+        return e.stream().map(this::toModel).collect(Collectors.toList());
     }
 }

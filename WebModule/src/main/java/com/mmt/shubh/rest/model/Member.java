@@ -28,8 +28,6 @@ public class Member {
 
     private String userPassword;
 
-    private String displayName;
-
     private String phoneNumber;
 
     private String coverPhotoUrl;
@@ -40,7 +38,7 @@ public class Member {
 
     private boolean isActive;
 
-    private List<DeviceDetails> deviceDetailsList;
+    private DeviceDetails deviceDetailsList;
 
     private List<ExpenseBook> expenseBooks;
 

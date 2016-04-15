@@ -10,15 +10,13 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * Created by subhamtyagi on 4/1/16.
- */
+
 @Component(value = "accountEntityModelConverter")
 public class AccountEntityModelConverter implements IEntityModelConverter<AccountEntity, Account> {
+
     @Override
     public AccountEntity toEntity(Account account) {
         AccountEntity accountEntity = new AccountEntity();
-
         accountEntity.setAccountType(account.getAccountType());
         accountEntity.setAccountName(account.getAccountName());
         accountEntity.setAccountBalance(account.getAccountBalance());

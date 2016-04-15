@@ -1,12 +1,15 @@
 package com.mmt.shubh.rest.resources.member;
 
+import com.mmt.shubh.rest.ApiResult;
 import com.mmt.shubh.rest.model.DeviceDetails;
+import com.mmt.shubh.rest.model.LoginStatus;
 import com.mmt.shubh.rest.model.Member;
 import com.mmt.shubh.service.device.IDeviceService;
 import com.mmt.shubh.service.member.IMemberService;
 import com.mmt.shubh.service.member.MemberServiceImpl;
+import com.mmt.shubh.utility.MemberState;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.constraints.Email;
+import org.apache.http.util.TextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -99,5 +102,28 @@ public class MemberResourceImpl implements IMemberResource {
     @Override
     public String getDemo() {
         return "Hello how are you";
+    }
+
+    @Override
+    public ApiResult<LoginStatus> login(Member member) {
+        String accessToken = mMemberService.login(member);
+        ApiResult<LoginStatus> apiResult = new ApiResult<>();
+
+        LoginStatus loginStatus = new LoginStatus();
+
+        if (TextUtils.isEmpty(accessToken)) {
+            loginStatus.setAccessToken(accessToken);
+            loginStatus.setLoginStatus(MemberState.LOGGED_IN.name());
+            apiResult.setStatus(true);
+        } else {
+            apiResult.setStatus(true);
+        }
+        apiResult.setData(loginStatus);
+        return apiResult;
+    }
+
+    @Override
+    public void logout(String emailId) {
+        mMemberService.logout(emailId);
     }
 }

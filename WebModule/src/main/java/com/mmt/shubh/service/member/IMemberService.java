@@ -35,4 +35,10 @@ public interface IMemberService {
     Member createMember(Member memberEntity);
 
     Member getMemberById(long memberServerId);
+
+    String generateAccessToken(String memberEmail);
+
+    String login(Member member);
+
+    void logout(String emailId);
 }

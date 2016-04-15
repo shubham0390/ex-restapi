@@ -20,8 +20,8 @@ public class AccountResourceImpl implements IAccountResource {
     IAccountService mAccountService;
 
     @Override
-    public long addAccount(Account account) {
-        return mAccountService.addAccount(account);
+    public void addAccount(Account account) {
+        mAccountService.addAccount(account);
     }
 
     @Override

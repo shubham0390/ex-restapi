@@ -39,9 +39,6 @@ public class MemberEntity implements Serializable {
     @Column(name = "user_password")
     private String userPassword;
 
-    @Column(name = "display_name", nullable = false)
-    private String displayName;
-
     @Column(name = "cover_photo_url")
     private String coverPhotoUrl;
 

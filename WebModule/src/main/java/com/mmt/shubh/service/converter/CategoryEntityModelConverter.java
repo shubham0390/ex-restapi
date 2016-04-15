@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Subham Tyagi
@@ -35,19 +36,11 @@ public class CategoryEntityModelConverter implements IEntityModelConverter<Categ
 
     @Override
     public List<CategoryEntity> toEntity(List<Category> m) {
-        List<CategoryEntity> categoryEntities = new ArrayList<>();
-        m.forEach(category -> {
-            categoryEntities.add(toEntity(category));
-        });
-        return categoryEntities;
+        return m.stream().map(this::toEntity).collect(Collectors.toList());
     }
 
     @Override
     public List<Category> toModel(List<CategoryEntity> e) {
-        List<Category> categories = new ArrayList<>();
-        e.forEach(categoryEntity -> {
-            categories.add(toModel(categoryEntity));
-        });
-        return categories;
+        return e.stream().map(this::toModel).collect(Collectors.toList());
     }
 }
