@@ -20,8 +20,6 @@ public interface IMemberService {
 
     long deleteMember(long id);
 
-    Member getMember(String emailId);
-
     Member registerMember(Member member) ;
 
     String deleteMember(String emailId);
@@ -36,9 +34,6 @@ public interface IMemberService {
 
     Member getMemberById(long memberServerId);
 
-    String generateAccessToken(String memberEmail);
 
-    String login(Member member);
 
-    void logout(String emailId);
 }

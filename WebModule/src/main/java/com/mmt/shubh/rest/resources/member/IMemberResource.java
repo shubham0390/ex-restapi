@@ -3,6 +3,7 @@ package com.mmt.shubh.rest.resources.member;
 import com.mmt.shubh.rest.ApiResult;
 import com.mmt.shubh.rest.model.DeviceDetails;
 import com.mmt.shubh.rest.model.Member;
+import com.mmt.shubh.rest.model.result.MemberRegistrationResult;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +26,21 @@ import java.util.List;
 public interface IMemberResource {
 
     @POST
-    Member registerMember(Member member);
+    @Path("/register")
+    ApiResult<MemberRegistrationResult> registerMember(Member member);
+
+    @PUT
+    @Path("/login/{mobileno}")
+    ApiResult<MemberRegistrationResult> login(@PathParam("mobileno") String phoneNumber);
+
+    @PUT
+    @Path("/logout")
+    void logout(String emailId);
 
     @PUT
     Member updateMember(Member member);
+
+    ApiResult<MemberRegistrationResult> generateOTP(long memberId);
 
     @GET
     @Valid
@@ -81,11 +93,5 @@ public interface IMemberResource {
     @Produces("text/plain")
     String getDemo();
 
-    @PUT
-    @Path("/login")
-    ApiResult login(Member member);
 
-    @PUT
-    @Path("/logout")
-    void logout(String emailId);
 }

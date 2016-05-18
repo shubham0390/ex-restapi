@@ -4,6 +4,7 @@ import com.mmt.shubh.rest.ApiResult;
 import com.mmt.shubh.rest.model.DeviceDetails;
 import com.mmt.shubh.rest.model.LoginStatus;
 import com.mmt.shubh.rest.model.Member;
+import com.mmt.shubh.rest.model.result.MemberRegistrationResult;
 import com.mmt.shubh.service.device.IDeviceService;
 import com.mmt.shubh.service.member.IMemberService;
 import com.mmt.shubh.service.member.MemberServiceImpl;
@@ -30,7 +31,7 @@ import java.util.List;
 public class MemberResourceImpl implements IMemberResource {
 
     @Qualifier(value = "memberServiceImpl")
-    @Autowired(required = true)
+    @Autowired()
     private IMemberService mMemberService = new MemberServiceImpl();
 
     @Qualifier(value = "deviceServiceImpl")
@@ -38,8 +39,14 @@ public class MemberResourceImpl implements IMemberResource {
     private IDeviceService mDeviceService;
 
     @Override
-    public Member registerMember(Member member) {
-        return mMemberService.registerMember(member);
+    public ApiResult<MemberRegistrationResult> registerMember(Member member) {
+        mMemberService.registerMember(member);
+        return null;
+    }
+
+    @Override
+    public ApiResult<MemberRegistrationResult> login(String phoneNumber) {
+        return null;
     }
 
     @Override
@@ -104,7 +111,6 @@ public class MemberResourceImpl implements IMemberResource {
         return "Hello how are you";
     }
 
-    @Override
     public ApiResult<LoginStatus> login(Member member) {
         String accessToken = mMemberService.login(member);
         ApiResult<LoginStatus> apiResult = new ApiResult<>();

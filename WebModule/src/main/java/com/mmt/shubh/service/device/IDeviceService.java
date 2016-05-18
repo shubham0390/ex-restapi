@@ -16,5 +16,7 @@ public interface IDeviceService {
 
     String deleteDevice(String details, String emailId);
 
-    long addDevice(long memberID, DeviceDetails deviceDetails);
+    DeviceDetails addDevice(long memberID, DeviceDetails deviceDetails);
+
+    DeviceDetails getDeviceByMemberKey(long memberKey);
 }

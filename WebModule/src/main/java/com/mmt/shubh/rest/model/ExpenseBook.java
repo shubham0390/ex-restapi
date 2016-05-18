@@ -20,9 +20,8 @@ import java.util.List;
 @XmlRootElement
 public class ExpenseBook {
     private long id;
-    private String clientId;
     private String name;
-    private String ownerEmailId;
+    private long ownerKey;
     private String profileImagePath;
     private String description;
     private String type;

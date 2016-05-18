@@ -33,4 +33,6 @@ public interface IMemberRepository {
     MemberEntity getMemberByEmail(String emailId);
 
     List<MemberEntity> createMembers(List<MemberEntity> memberList);
+
+    MemberEntity getMemberUniqueId(String uniqueId);
 }
