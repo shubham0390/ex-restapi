@@ -6,76 +6,172 @@ HOST:api.expensemanager.com/api/v1/users
 Api's to signup,signin,logout and delete account,
 These apis are responsible for creating,updating,fetching and deleting devices 
 
-## User Signup [/signup]
+## User Signup 
 
-### Register a member [Post]
+### Signup a user [Post]
+
+You may signup to expense manager using this action.This take user and device information as follow
+User - Name ,Email Address(optional),phone number,profileImageUrl (Optional),CoverImageUrl(Optional)
+Device Detail - DeviceUUID,Platform,OsVersion,GCMToken(Optional)
+
++ Request (application/user)
+
+    + Headers
+            
+            UserAgent: exmanager/Android/4.2
+            
+    
+    + Body
+        
+            {
+                    "User":
+                        {
+                             "UserName":"Subham Tyagi"
+                             "EmailAddress":"Subham@gmail.com"
+                             "PhoneNumber":"9663295153"
+                             "ProfileImageUrl":"https://www.google/profilepic"
+                             "CoverImageUrl":"https://www.google/coverImage"
+                             "DeviceDetail":
+                                {
+                                    "DeviceUUID":"asdjaksjh1y239129839kajbdksjbdk"
+                                    "Platform":"Android"/"IOS"/"Windows"
+                                    "OsVersion":"4.4"
+                                    "GCMToken":"akjdlakjsldsldjlaskjd"
+                                }
+                         
+                        }
+            }
+        
++ Repsonse 200 (application/json)
+
+    + Headers
+                
+                ContentType:application/json
+    
+    + Body
+        
+                {
+                    "status":"success"
+                    "data":
+                        {
+                            "message": "OTP send as sms/email on provided number/email"
+                        }
+                }
+        
+        
++ Reponse 419 (application/json)
+    
+    + Headers
+            
+                ContentType:application/json
+    
+    + Body
+  
+            {
+                 "status":"fail"
+                 "data":
+                    {
+                        "message": "User already register"
+                    }
+            
+            }
+        
++ Rsponse 400 (application/json)
+    
+    + Headers
+                
+                ContentType:application/json
+                
+    + Body
+        
+            {
+                "status":"fail"
+                    {
+                        data:
+                        [
+                            {
+                                "code":"1"
+                                "message":"User name empty"
+                            },
+                            {
+                                "code":"2"
+                                "message":"Phone number empty"
+                            },
+                            {
+                                "code":"1"
+                                "message":"Device uuid empty"
+                            },
+                        ]
+                        
+                    }
+            }
+        
+
+## User Login
+### Login user into system [POST]
+
+You may login to expense manager using this action. It takes a JSON
+object containing a valid phone no or email id
+
++ Request (application/json)
+    + Headers
+                
+                ContentType:application/json
+                UserAgent: exmanager/Android/4.2
+                
+    + Body
+    
+            {
+                "phoneNo":"1234567890"
+            }
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
-
-+ Request (application/json)
-
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
-
-+ Response 201 (application/json)
-
     + Headers
 
-            Location: /questions/2
+            ContentType: application/json
 
     + Body
 
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
+                "status":"success:
+                "data":
                     {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
+                        "message":"OTP has been send to registerd emailid/phone no"
                     }
-                ]
+            }
+            
+            
++ Response 404 (application/json)
+
+    + Headers
+
+            ContentType: application/json
+
+    + Body
+
+            {
+                "status":"faile:
+                "data":
+                    {
+                        "message":"User is not registerd."
+                    }
+            }
+            
+            
+
++ Response 400 (application/json)
+
+    + Headers
+
+            ContentType: application/json
+
+    + Body
+
+            {
+                "status":"faile:
+                "data":
+                    {
+                        "message":"Empty phone number"
+                    }
             }
