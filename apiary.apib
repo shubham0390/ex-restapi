@@ -12,7 +12,7 @@ These apis are responsible for creating,updating,fetching and deleting devices
 
 You may signup to expense manager using this action.This take user and device information as follow
 User - Name ,Email Address(optional),phone number,profileImageUrl (Optional),CoverImageUrl(Optional)
-Device Detail - DeviceUUID,Platform,OsVersion,GCMToken(Optional)
+Device Detail - DeviceUUID,Platform,GCMToken(Optional)
 
 + Request (application/user)
 
@@ -35,7 +35,6 @@ Device Detail - DeviceUUID,Platform,OsVersion,GCMToken(Optional)
                                 {
                                     "DeviceUUID":"asdjaksjh1y239129839kajbdksjbdk"
                                     "Platform":"Android"/"IOS"/"Windows"
-                                    "OsVersion":"4.4"
                                     "GCMToken":"akjdlakjsldsldjlaskjd"
                                 }
                          
@@ -98,9 +97,13 @@ Device Detail - DeviceUUID,Platform,OsVersion,GCMToken(Optional)
                                 "message":"Phone number empty"
                             },
                             {
-                                "code":"1"
+                                "code":"3"
                                 "message":"Device uuid empty"
                             },
+                            {
+                                "code":"4"
+                                "message":"Platform is empty"
+                            }
                         ]
                         
                     }
@@ -174,4 +177,246 @@ object containing a valid phone no or email id
                     {
                         "message":"Empty phone number"
                     }
+            }
+            
+    
+## User Logout(/userId)
+### Logout user from system [PUT]
+
+You may logout to expense manager using this action. It takes a JSON
+object containing a valid phone no or email id
+
++ Request
+   
+   + Headers
+   
+            ContentType: application/json
+            AutherasationToken:"121232kjsakjddhfqy3748738"
+            UserAgent: exmanager/Android/4.2
+   
++ Response 200 (application/json) 
+  
+    + Headers
+            
+                ContentType: application/json
+                
+    + Body
+            {
+                "status":"success"
+                "data":
+                       {
+                            "message":"User logged out successfully"
+                       }
+            }
+            
++ Response 200 (application/json) 
+  
+    + Headers
+            
+                ContentType: application/json
+                
+    + Body
+            
+            {
+                "status":"success"
+                "data":
+                        {
+                            "message":"User logged out successfully"
+                        }
+            }
+
+
++ Response 401 (application/json) 
+  
+    + Headers
+            
+                ContentType: application/json
+                
+    + Body
+            
+            {
+                "status":"fail"
+                "data":
+                        {
+                            "message":"Invalid access token"
+                        }
+            }
+
++ Response 404 (application/json) 
+  
+    + Headers
+            
+                ContentType: application/json
+                
+    + Body
+            
+            {
+                "status":"fail"
+                "data":
+                        {
+                            "message":"User not registered"
+                        }
+            }
+
+## Add new device(/userId/devices)
+### Add new device to existing user [POST]
+
+You may add a new device to existing user using this action. It takes a JSON
+object containing  valid device details and registered user's phone number or email id 
++ Request 
+  
+   + Headers
+   
+            ContentType: application/json
+            AutherasationToken:"121232kjsakjddhfqy3748738"
+            UserAgent: exmanager/Android/4.2
+   
+   + Body
+   
+            {
+                "mobileNo":"1234567890"
+                "deviceDetails":
+                                {
+                                    "DeviceUUID":"asdjaksjh1y239129839kajbdksjbdk"
+                                    "Platform":"Android"/"IOS"/"Windows"
+                                    "GCMToken":"akjdlakjsldsldjlaskjd"
+                                }
+            }
+        
+
++ Response 201 (application/json) 
+  
+    + Headers
+            
+                ContentType: application/json
+                
+    + Body
+            
+            {
+                "status":"success"
+                "data":
+                        {
+                            "message":"Device created successfull"
+                        }
+            }
+            
+
++ Response 404 (application/json) 
+  
+    + Headers
+            
+                ContentType: application/json
+                
+    + Body
+            
+            {
+                "status":"fail"
+                "data":
+                        {
+                            "message":"User is not registered"
+                        }
+            }
+
++ Response 401 (application/json) 
+  
+    + Headers
+            
+                ContentType: application/json
+                
+    + Body
+            
+            {
+                "status":"fail"
+                "data":
+                        {
+                            "message":"Unathorized access"
+                        }
+            }
+
++ Rsponse 400 (application/json)
+    
+    + Headers
+                
+                ContentType:application/json
+                
+    + Body
+        
+            {
+                "status":"fail"
+                    {
+                        data:
+                        [
+                           {
+                                "code":"3"
+                                "message":"Device uuid empty"
+                            },
+                            {
+                                "code":"4"
+                                "message":"Platform is empty"
+                            },
+                             {
+                                "code":"5"
+                                "message":"OS version is empty"
+                            },
+                        ]
+                        
+                    }
+            }
+        
+        
+
+## Update existing device(userId/device/deviceUUID)
+### update GCM token for existing device [PUT]
+
+You may update exisitng device using this action. It takes a JSON
+object containing  valid device details and registered user's phone number or email id 
+
++ Request 
+  
+   + Headers
+   
+            ContentType: application/json
+            AutherasationToken:"121232kjsakjddhfqy3748738"
+            UserAgent: exmanager/Android/4.2
+   
+   + Body
+   
+            {
+              "GCMToken":"akjdlakjsldsldjlaskjd"
+            }
+        
+
++ Response (200)
+    
+    + Headers
+   
+            ContentType: application/json
+            
+    + Body
+    
+        {
+            "status":"success"
+        }
+
++ Response (404)
+    
+    + Headers
+   
+            ContentType: application/json
+            
+    + Body
+    
+            {
+                "status":"fail"
+                "data":
+                        [
+                             {
+                                 "code":"7"
+                                 "message":"device not found"
+                            },
+                            {
+                                "code":"7"
+                                "message":"user not found"
+                            }
+                    ]
             }
