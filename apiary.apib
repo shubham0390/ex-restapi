@@ -126,6 +126,7 @@ object containing a valid phone no or email id
     
             {
                 "phoneNo":"1234567890"
+                "deviceUUID": "asdadlkasdflksldkfjlkdlk"
             }
 
 + Response 200 (application/json)
@@ -180,7 +181,7 @@ object containing a valid phone no or email id
             }
             
     
-## User Logout(/userId)
+## User Logout(/{userId})
 ### Logout user from system [PUT]
 
 You may logout to expense manager using this action. It takes a JSON
@@ -193,6 +194,12 @@ object containing a valid phone no or email id
             ContentType: application/json
             AutherasationToken:"121232kjsakjddhfqy3748738"
             UserAgent: exmanager/Android/4.2
+
+   + Body
+        
+            {
+                DeviceUUID:andkjsdkfjskjdfkjdk
+            }
    
 + Response 200 (application/json) 
   
@@ -200,15 +207,18 @@ object containing a valid phone no or email id
             
                 ContentType: application/json
                 
+    
     + Body
+            
             {
                 "status":"success"
                 "data":
-                       {
-                            "message":"User logged out successfully"
-                       }
+                        {
+                             "message":"User logged out successfully"
+                        }
             }
-            
+
+
 + Response 200 (application/json) 
   
     + Headers
@@ -258,7 +268,7 @@ object containing a valid phone no or email id
                         }
             }
 
-## Add new device(/userId/devices)
+## Add new device(/{userId}/devices)
 ### Add new device to existing user [POST]
 
 You may add a new device to existing user using this action. It takes a JSON
@@ -365,7 +375,7 @@ object containing  valid device details and registered user's phone number or em
         
         
 
-## Update existing device(userId/device/deviceUUID)
+## Update existing device({userId}/device/{deviceUUID})
 ### update GCM token for existing device [PUT]
 
 You may update exisitng device using this action. It takes a JSON
@@ -394,9 +404,9 @@ object containing  valid device details and registered user's phone number or em
             
     + Body
     
-        {
-            "status":"success"
-        }
+            {
+                "status":"success"
+            }
 
 + Response (404)
     
@@ -419,4 +429,83 @@ object containing  valid device details and registered user's phone number or em
                                 "message":"user not found"
                             }
                     ]
+            }
+            
+            
++ Response 401 (application/json) 
+  
+    + Headers
+            
+                ContentType: application/json
+                
+    + Body
+            
+            {
+                "status":"fail"
+                "data":
+                        {
+                            "message":"Unathorized access"
+                        }
+            }
+
+## Delete device(/{userId}/devices/{deviceUUID})
+### Delete any existing device with provided user id and decieUUID
+
+ + Headers
+            
+            ContentType: application/json
+            AutherasationToken:"121232kjsakjddhfqy3748738"
+            UserAgent: exmanager/Android/4.2
+                
+
++ Response (200)
+    
+    + Headers
+   
+            ContentType: application/json
+            
+    + Body
+    
+            {
+                "status":"success"
+            }
+
++ Response (404)
+    
+    + Headers
+   
+            ContentType: application/json
+            
+    + Body
+    
+            {
+                "status":"fail"
+                "data":
+                        [
+                             {
+                                 "code":"7"
+                                 "message":"device not found"
+                            },
+                            {
+                                "code":"7"
+                                "message":"user not found"
+                            }
+                    ]
+            }
+            
+            
++ Response 401 (application/json) 
+  
+    + Headers
+            
+                ContentType: application/json
+                
+    + Body
+            
+            {
+                "status":"fail"
+                "data":
+                        {
+                            "message":"Unathorized access"
+                        }
             }
