@@ -1,10 +1,9 @@
 package com.mmt.shubh.service.device;
 
 import com.mmt.shubh.database.entity.DeviceEntity;
-import com.mmt.shubh.database.entity.MemberEntity;
 import com.mmt.shubh.database.repository.device.IDeviceRepository;
 import com.mmt.shubh.database.repository.member.IMemberRepository;
-import com.mmt.shubh.rest.model.DeviceDetails;
+import com.mmt.shubh.rest.model.Device;
 import com.mmt.shubh.service.converter.IEntityModelConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class DeviceServiceImpl implements IDeviceService {
 
     @Qualifier(value = "deviceEntityModelConverter")
     @Autowired
-    IEntityModelConverter<DeviceEntity, DeviceDetails> mEntityModelConverter;
+    IEntityModelConverter<DeviceEntity, Device> mEntityModelConverter;
 
     @Override
     public String updateGCMToken(String gcmToken, String emailId) {
@@ -43,7 +42,7 @@ public class DeviceServiceImpl implements IDeviceService {
     }
 
     @Override
-    public DeviceDetails updateDevice(DeviceDetails deviceDetails, String emailId) {
+    public Device updateDevice(Device device, String emailId) {
         return null;
     }
 
@@ -53,32 +52,35 @@ public class DeviceServiceImpl implements IDeviceService {
     }
 
     @Override
-    public long addDevice(long memberId, DeviceDetails deviceDetails) {
+    public Device addDevice(long memberId, Device device) {
         log.debug("ENTER METHOD addDevice");
         DeviceEntity deviceEntity = null;
 
         try {
-            deviceEntity = mDeviceRepository.getDeviceByMemberAndDeviceId(memberId, deviceDetails.getDeviceUUID());
+            deviceEntity = mDeviceRepository.getDeviceByMemberAndDeviceId(memberId, device.getDeviceUUID());
             log.info("Device already present");
         } catch (NonUniqueResultException e) {
             log.error("Should not be two device for same device UUID");
         } catch (NoResultException e) {
-            log.info("No device present with given uuid" + deviceDetails.getDeviceUUID());
+            log.info("No device present with given uuid" + device.getDeviceUUID());
         }
 
         if (deviceEntity == null) {
             log.debug("Updating device with new data for member id " + memberId);
-            MemberEntity memberEntity = mMemberRepository.getMemberById(memberId);
-            deviceEntity = mEntityModelConverter.toEntity(deviceDetails);
-            deviceEntity.setMember(memberEntity);
+            deviceEntity = mEntityModelConverter.toEntity(device);
             long id = mDeviceRepository.createDevice(deviceEntity);
             log.debug("EXIT METHOD addDevice");
-            return id;
+            return null;
         } else {
             log.debug("Creating new device for member id :" + memberId);
-            long id = mDeviceRepository.updateDevice(mEntityModelConverter.toEntity(deviceDetails));
+            long id = mDeviceRepository.updateDevice(mEntityModelConverter.toEntity(device));
             log.debug("EXIT METHOD addDevice");
-            return id;
+            return null;
         }
+    }
+
+    @Override
+    public Device getDeviceByMemberKey(long memberKey) {
+        return null;
     }
 }

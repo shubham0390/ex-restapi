@@ -1,9 +1,6 @@
 package com.mmt.shubh.rest.resources.member;
 
-import com.mmt.shubh.rest.ApiResult;
-import com.mmt.shubh.rest.model.DeviceDetails;
 import com.mmt.shubh.rest.model.Member;
-import com.mmt.shubh.rest.model.result.MemberRegistrationResult;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.stereotype.Service;
 
@@ -25,22 +22,8 @@ import java.util.List;
 @Service
 public interface IMemberResource {
 
-    @POST
-    @Path("/register")
-    ApiResult<MemberRegistrationResult> registerMember(Member member);
-
-    @PUT
-    @Path("/login/{mobileno}")
-    ApiResult<MemberRegistrationResult> login(@PathParam("mobileno") String phoneNumber);
-
-    @PUT
-    @Path("/logout")
-    void logout(String emailId);
-
     @PUT
     Member updateMember(Member member);
-
-    ApiResult<MemberRegistrationResult> generateOTP(long memberId);
 
     @GET
     @Valid
@@ -56,32 +39,6 @@ public interface IMemberResource {
     @Valid
     String deleteMember(@NotNull @Email @QueryParam("emailId") String emailId);
 
-    @PUT
-    @Produces("application/json")
-    @Path("/device/{GCMToken}")
-    @Valid
-    String updateGCMToken(@NotNull @PathParam("GCMToken") String GCMToken,
-                          @NotNull @Email @QueryParam("emailId") String emailId);
-
-    @POST
-    @Path("/device")
-    @Valid
-    long addDevice(@NotNull @QueryParam("memberId") long memberId, DeviceDetails deviceDetails);
-
-    @PUT
-    @Path("/device")
-    @Valid
-    DeviceDetails updateDevice(@NotNull @Email @QueryParam("emailId") String emailId, DeviceDetails deviceDetails);
-
-    @DELETE
-    @Path("/device")
-    @Valid
-    String deleteDevice(@NotNull @QueryParam("deviceUUID") String detailsUUID,
-                        @NotNull @Email @QueryParam("emailId") String emailId);
-
-    @GET
-    @Path("/device")
-    List<DeviceDetails> getMemberDevices(@NotNull @QueryParam("memberId") long memberId);
 
     @GET
     @Path("member/sync/{syncId}/{expenseBookId}")

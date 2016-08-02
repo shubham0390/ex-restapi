@@ -59,10 +59,6 @@ public class MemberEntity implements Serializable {
     @Property(policy = PojomaticPolicy.NONE)
     private Collection<ExpenseEntity> expense;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = {CascadeType.REFRESH, CascadeType.REMOVE, CascadeType.MERGE})
-    @Property(policy = PojomaticPolicy.NONE)
-    private Collection<DeviceEntity> deviceEntities;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner", cascade = {CascadeType.REFRESH, CascadeType.REMOVE, CascadeType.MERGE})
     @Property(policy = PojomaticPolicy.NONE)
     private Collection<CategoryEntity> categories;

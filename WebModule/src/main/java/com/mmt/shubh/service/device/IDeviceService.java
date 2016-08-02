@@ -1,6 +1,6 @@
 package com.mmt.shubh.service.device;
 
-import com.mmt.shubh.rest.model.DeviceDetails;
+import com.mmt.shubh.rest.model.Device;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,11 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 public interface IDeviceService {
     
     String updateGCMToken(String gcmToken, String emailId);
-    DeviceDetails updateDevice(DeviceDetails deviceDetails, String emailId);
+
+    Device updateDevice(Device device, String emailId);
 
     String deleteDevice(String details, String emailId);
 
-    DeviceDetails addDevice(long memberID, DeviceDetails deviceDetails);
+    Device addDevice(long memberID, Device device);
 
-    DeviceDetails getDeviceByMemberKey(long memberKey);
+    Device getDeviceByMemberKey(long memberKey);
 }

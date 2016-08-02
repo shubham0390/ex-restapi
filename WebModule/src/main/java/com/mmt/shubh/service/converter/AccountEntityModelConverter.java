@@ -5,15 +5,11 @@ import com.mmt.shubh.rest.model.Account;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @Component(value = "accountEntityModelConverter")
 public class AccountEntityModelConverter implements IEntityModelConverter<AccountEntity, Account> {
-
     @Override
     public AccountEntity toEntity(Account account) {
         AccountEntity accountEntity = new AccountEntity();

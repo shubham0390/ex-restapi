@@ -1,7 +1,7 @@
 package com.mmt.shubh.service.converter;
 
 import com.mmt.shubh.database.entity.DeviceEntity;
-import com.mmt.shubh.rest.model.DeviceDetails;
+import com.mmt.shubh.rest.model.Device;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -16,29 +16,29 @@ import java.util.stream.Collectors;
  */
 @Component
 @Scope(value = "prototype")
-public class DeviceEntityModelConverter implements IEntityModelConverter<DeviceEntity, DeviceDetails> {
+public class DeviceEntityModelConverter implements IEntityModelConverter<DeviceEntity, Device> {
 
-    public DeviceEntity toEntity(DeviceDetails deviceDetails) {
+    public DeviceEntity toEntity(Device device) {
         DeviceEntity builder = new DeviceEntity();
-        builder.setDeviceUUID(deviceDetails.getDeviceUUID());
-        builder.setRegistrationToken(deviceDetails.getGcmToken());
+        builder.setDeviceUUID(device.getDeviceUUID());
+        builder.setRegistrationToken(device.getGcmToken());
         return builder;
     }
 
-    public DeviceDetails toModel(DeviceEntity deviceEntity) {
-        DeviceDetails builder = new DeviceDetails();
+    public Device toModel(DeviceEntity deviceEntity) {
+        Device builder = new Device();
         builder.setDeviceUUID(deviceEntity.getDeviceUUID());
         builder.setGcmToken(deviceEntity.getRegistrationToken());
         return builder;
     }
 
     @Override
-    public List<DeviceEntity> toEntity(List<DeviceDetails> m) {
+    public List<DeviceEntity> toEntity(List<Device> m) {
         return m.stream().map(this::toEntity).collect(Collectors.toList());
     }
 
     @Override
-    public List<DeviceDetails> toModel(List<DeviceEntity> e) {
+    public List<Device> toModel(List<DeviceEntity> e) {
         return e.stream().map(this::toModel).collect(Collectors.toList());
     }
 }

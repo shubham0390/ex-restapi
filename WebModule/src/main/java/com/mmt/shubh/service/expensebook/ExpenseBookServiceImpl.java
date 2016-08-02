@@ -63,8 +63,8 @@ public class ExpenseBookServiceImpl implements IExpenseBookService {
             expenseBookEntity.setMemberList(new HashSet<>(entities));
             addM(expenseBookEntity);
         } else {
-            throw new WebApplicationException("Expense book already present with following name "
-                    + expenseBook.getName() + "for following member" + expenseBook.getOwnerEmailId());
+           /* throw new WebApplicationException("Expense book already present with following name "
+                    + expenseBook.getName() + "for following member" + expenseBook.getOwnerEmailId());*/
         }
 
 
@@ -95,8 +95,8 @@ public class ExpenseBookServiceImpl implements IExpenseBookService {
 
     private ExpenseBookEntity getExpenseBookEntity(ExpenseBook expenseBook, ExpenseBookEntity expenseBookEntity) {
         try {
-            expenseBookEntity = mExpenseBookRepository.getExpenseBookByMember(expenseBook.getClientId(),
-                    expenseBook.getOwnerEmailId());
+           /* expenseBookEntity = mExpenseBookRepository.getExpenseBookByMember(expenseBook.getClientId(),
+                    expenseBook.getOwnerEmailId());*/
         } catch (EmptyResultDataAccessException e) {
             //no need to log;
         }

@@ -6,11 +6,10 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
 
 /**
  * Created by Subham Tyagi
- * On 6/10/2015.
+ * On 6/5/2015.
  * <p>
  * TODO: Add class comments
  */
@@ -18,31 +17,13 @@ import java.util.List;
 @AutoProperty
 @Getter
 @Setter
-public class Member {
+public class Device {
 
     private long id;
 
-    private String memberName;
+    private String deviceUUID;
 
-    private String memberEmail;
-
-    private String userPassword;
-
-    private String phoneNumber;
-
-    private String coverPhotoUrl;
-
-    private String profilePhotoUrl;
-
-    private boolean isRegistered;
-
-    private boolean isActive;
-
-    private Device deviceList;
-
-    private List<ExpenseBook> expenseBooks;
-
-    private List<Account> accounts;
+    private String gcmToken;
 
     @Override
     public boolean equals(Object o) {

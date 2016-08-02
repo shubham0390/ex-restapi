@@ -4,7 +4,7 @@ import com.mmt.shubh.database.BaseRepository;
 import com.mmt.shubh.database.entity.DeviceEntity;
 import com.mmt.shubh.database.entity.DeviceEntity_;
 import com.mmt.shubh.database.entity.MemberEntity;
-import com.mmt.shubh.database.entity.MemberEntity_;
+import com.mmt.shubh.database.entity.UserEntity_;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -81,7 +81,7 @@ public class DeviceSQLRepository extends BaseRepository<DeviceEntity> implements
         query.where(
                 builder.and(
                         builder.equal(root.get(DeviceEntity_.deviceUUID), deviceUUID),
-                        builder.equal(root.get(DeviceEntity_.member).get(MemberEntity_.id), memberId)
+                        builder.equal(root.get(DeviceEntity_.user).get(UserEntity_.id), memberId)
                 )
         );
         DeviceEntity deviceEntity = entityManager.createQuery(query).getSingleResult();

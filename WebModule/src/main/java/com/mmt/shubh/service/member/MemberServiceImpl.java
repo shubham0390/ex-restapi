@@ -2,7 +2,7 @@ package com.mmt.shubh.service.member;
 
 import com.mmt.shubh.database.entity.MemberEntity;
 import com.mmt.shubh.database.repository.member.IMemberRepository;
-import com.mmt.shubh.rest.model.DeviceDetails;
+import com.mmt.shubh.rest.model.Device;
 import com.mmt.shubh.rest.model.Member;
 import com.mmt.shubh.service.converter.IEntityModelConverter;
 import com.mmt.shubh.service.device.IDeviceService;
@@ -59,7 +59,7 @@ public class MemberServiceImpl implements IMemberService {
     public Member registerMember(Member member) {
         log.debug("REGISTER MEMBER STARTS");
         Member retMember;
-        DeviceDetails retDeviceDetails;
+        Device retDeviceDetails;
         MemberEntity memberEntity = null;
         try {
             memberEntity = mMemberRepository.getMemberByEmail(member.getMemberEmail());
@@ -74,8 +74,8 @@ public class MemberServiceImpl implements IMemberService {
             entity.setRegistered(true);
             try {
                 memberEntity = mMemberRepository.createMember(entity);
-                retDeviceDetails = mDeviceService.addDevice(memberEntity.getId(), member.getDeviceDetailsList());
-                mMemberOTPService.generateOTPService(memberEntity.getId(), retDeviceDetails.getId());
+                //retDeviceDetails = mDeviceService.addDevice(memberEntity.getId(), member.getDeviceDetailsList());
+                //mMemberOTPService.generateOTPService(memberEntity.getId(), retDeviceDetails.getId());
             } catch (DataIntegrityViolationException e) {
                 Response.ResponseBuilder builder = Response.status(Response.Status.CONFLICT)
                         .entity("Member already present with following email Address");
@@ -91,11 +91,11 @@ public class MemberServiceImpl implements IMemberService {
                 log.debug("Member is already present but not registered. Generating new otp");
                 long memberId = memberEntity.getId();
                 retDeviceDetails = mDeviceService.getDeviceByMemberKey(memberId);
-                if (retDeviceDetails == null) {
+                /*if (retDeviceDetails == null) {
                     if (member.getDeviceDetailsList() != null) {
                         mDeviceService.addDevice(memberId, member.getDeviceDetailsList());
                     }
-                }
+                }*/
                 mMemberOTPService.generateOTPService(memberId, retDeviceDetails.getId());
                 Response.ResponseBuilder builder = Response.status(Response.Status.UNAUTHORIZED);
                 builder.entity("Member already registered. Try to login again");
@@ -104,7 +104,7 @@ public class MemberServiceImpl implements IMemberService {
         }
 
         retMember = mIEntityModelConverter.toModel(memberEntity);
-        retMember.setDeviceDetailsList(retDeviceDetails);
+        //retMember.setDeviceDetailsList(retDeviceDetails);
         log.debug("REGISTER MEMBER END");
         return retMember;
     }

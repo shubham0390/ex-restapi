@@ -28,7 +28,7 @@ public class DeviceEntity extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
-    private MemberEntity member;
+    private UserEntity user;
 
     @Override
     public boolean equals(Object o) {

@@ -100,4 +100,9 @@ public class MemberSQLRepository extends BaseRepository<MemberEntity> implements
     public List<MemberEntity> createMembers(List<MemberEntity> memberList) {
         return null;
     }
+
+    @Override
+    public MemberEntity getMemberUniqueId(String uniqueId) {
+        return null;
+    }
 }

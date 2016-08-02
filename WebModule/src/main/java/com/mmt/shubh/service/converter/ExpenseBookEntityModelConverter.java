@@ -22,24 +22,24 @@ public class ExpenseBookEntityModelConverter implements IEntityModelConverter<Ex
 
     public ExpenseBookEntity toEntity(ExpenseBook expenseBook) {
         ExpenseBookEntity expenseBookEntity = new ExpenseBookEntity();
-        expenseBookEntity.setClientId(expenseBook.getClientId());
+        // expenseBookEntity.setClientId(expenseBook.getClientId());
         expenseBookEntity.setDateTime(expenseBook.getCreationDate());
         expenseBookEntity.setDescription(expenseBook.getDescription());
         expenseBookEntity.setName(expenseBook.getName());
         expenseBookEntity.setType(expenseBook.getType());
-        expenseBookEntity.setOwnerEmailId(expenseBook.getOwnerEmailId());
+        //expenseBookEntity.setOwnerEmailId(expenseBook.getOwnerEmailId());
         expenseBookEntity.setProfileImagePath(expenseBook.getProfileImagePath());
         return expenseBookEntity;
     }
 
     public ExpenseBook toModel(ExpenseBookEntity expenseBook) {
         ExpenseBook expenseBookEntity = new ExpenseBook();
-        expenseBookEntity.setClientId(expenseBook.getClientId());
+        //expenseBookEntity.setClientId(expenseBook.getClientId());
         expenseBookEntity.setCreationDate(expenseBook.getDateTime());
         expenseBookEntity.setDescription(expenseBook.getDescription());
         expenseBookEntity.setName(expenseBook.getName());
         expenseBookEntity.setType(expenseBook.getType());
-        expenseBookEntity.setOwnerEmailId(expenseBook.getOwnerEmailId());
+        //expenseBookEntity.setOwnerEmailId(expenseBook.getOwnerEmailId());
         expenseBookEntity.setProfileImagePath(expenseBook.getProfileImagePath());
         return expenseBookEntity;
     }
