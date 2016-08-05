@@ -8,11 +8,8 @@
                             http://cxf.apache.org/schemas/jaxrs.xsd">
 
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
-    <!--
-        &lt;!&ndash; Exception mapper &ndash;&gt;
-        <bean id="exceptionMapper" class="com.mmt.shubh.rest.providers.ExpenseManagerExceptionMapper"/>
-    -->
-    <!-- Swagger writers -->
+    <!-- Exception mapper -->
+    <bean id="exceptionMapper" class="com.mmt.shubh.rest.providers.ExpenseManagerExceptionMapper"/>
     <jaxrs:server address="/"
                   basePackages=
                           "com.mmt.shubh.rest.resources.expensebook,

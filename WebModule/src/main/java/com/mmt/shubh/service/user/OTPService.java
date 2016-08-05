@@ -64,7 +64,7 @@ public class OTPService implements IOTPService {
                 userOTPEntity.setExpirationTime(dateTime.plusMinutes(5).getMillis());
                 mOTpRepository.save(userOTPEntity);
 
-                sendSms(otp, userEntity.getPhoneNumber());
+                sendSms(otp, Integer.parseInt(userEntity.getPhoneNumber()));
             }
         }).start();
     }

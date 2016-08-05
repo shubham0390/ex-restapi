@@ -40,7 +40,7 @@ public class UserEntity implements Serializable {
     private String status;
 
     @Column(name = "phone_number")
-    private int phoneNumber;
+    private String phoneNumber;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.REFRESH, CascadeType.REMOVE, CascadeType.MERGE})
     @Property(policy = PojomaticPolicy.NONE)

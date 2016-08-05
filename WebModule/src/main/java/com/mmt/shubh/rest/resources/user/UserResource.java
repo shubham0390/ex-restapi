@@ -2,6 +2,7 @@ package com.mmt.shubh.rest.resources.user;
 
 import com.mmt.shubh.rest.ApiResult;
 import com.mmt.shubh.rest.model.Device;
+import com.mmt.shubh.rest.model.User;
 import com.mmt.shubh.rest.model.result.MemberRegistrationResult;
 import com.mmt.shubh.service.device.IDeviceService;
 import com.mmt.shubh.service.user.IUserService;
@@ -10,8 +11,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class UserResource implements IUserResources {
@@ -27,8 +28,8 @@ public class UserResource implements IUserResources {
     }
 
     @Override
-    public ApiResult<MemberRegistrationResult> signup(SignupRequest signupRequest) {
-        mUserService.signup(signupRequest.getUser(), signupRequest.getDevice());
+    public ApiResult<MemberRegistrationResult> signup(User user) {
+        mUserService.signup(user, user.getDevice());
         return null;
     }
 
@@ -65,14 +66,22 @@ public class UserResource implements IUserResources {
     }
 
     @Override
-    public List<Device> getMemberDevices(@NotNull long memberId) {
-        List<Device> mDeviceDetailses = new ArrayList<>();
+    public User getDevices(@NotNull String memberId) {
+        User user = new User();
+        user.setEmail("shubham.k.tyagi@gmail.com");
+        user.setName("Subham Tyagi");
+        user.setPhoneNumber("9663295153");
+        user.setProfileImageUrl("ajsbdlfkjasljdkfhalsjkhdfljs");
+        user.setCoverImageUrl("mdnckajsndkjfskdjnfkjd");
+        Set<Device> mDeviceDetailses = new HashSet<>();
         Device device = new Device();
         device.setDeviceUUID("afdkasdfkhaskfdhaskdfhfsh");
         device.setGcmToken("ahfdkjhsadjfahsdj");
         device.setId(123456789);
         mDeviceDetailses.add(device);
-        return mDeviceDetailses;
+        user.setDevice(device);
+        user.setOtherDevices(mDeviceDetailses);
+        return user;
     }
 
 

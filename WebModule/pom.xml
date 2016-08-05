@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>WebModule</artifactId>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
     <name>WebModule Expense Manager Rest Api's</name>
     <url>http://maven.apache.org</url>
     <description>Rest API's for Expense Manager</description>

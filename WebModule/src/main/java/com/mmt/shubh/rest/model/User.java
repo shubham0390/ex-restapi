@@ -7,6 +7,7 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Set;
 
 @XmlRootElement
 @AutoProperty
@@ -16,9 +17,11 @@ public class User {
 
     private String name;
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
     private String profileImageUrl;
     private String coverImageUrl;
+    private Device device;
+    private Set<Device> otherDevices;
 
     @Override
     public boolean equals(Object o) {
