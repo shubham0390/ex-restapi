@@ -25,6 +25,7 @@ import com.km2labs.expenseview.exception.DataException.DataError;
 import com.km2labs.expenseview.rest.model.Device;
 import com.km2labs.expenseview.rest.model.User;
 import com.km2labs.expenseview.service.converter.IEntityModelConverter;
+import com.km2labs.expenseview.service.device.IDeviceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -42,23 +43,26 @@ public class UserService implements IUserService {
 
     private final IUserRepository mUserRepository;
 
-
     private final IEntityModelConverter<UserEntity, User> mUserEntityModelConverter;
 
     private final IEntityModelConverter<DeviceEntity, Device> mDeviceEntityModelConverter;
 
     private IOTPService mOTPService;
 
+    private final IDeviceService mDeviceService;
+
     @Autowired
     public UserService(@Qualifier(value = "userRepository") IUserRepository userRepository,
                        @Qualifier(value = "OTPService") IOTPService optService,
                        @Qualifier(value = "userEntityModelConverter") IEntityModelConverter<UserEntity, User> userEntityModelConverter,
-                       @Qualifier(value = "deviceEntityModelConverter") IEntityModelConverter<DeviceEntity, Device> deviceEntityModelConverter) {
+                       @Qualifier(value = "deviceEntityModelConverter") IEntityModelConverter<DeviceEntity, Device> deviceEntityModelConverter,
+                       final @Qualifier("deviceServiceImpl") IDeviceService mDeviceService) {
 
         this.mUserRepository = userRepository;
         this.mUserEntityModelConverter = userEntityModelConverter;
         this.mOTPService = optService;
         this.mDeviceEntityModelConverter = deviceEntityModelConverter;
+        this.mDeviceService = mDeviceService;
     }
 
     @Override
@@ -123,18 +127,41 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public long login(String loginType, String authenticationToken, String mobileNo, Device device) {
+    public User user(String loginType, String authenticationToken, String mobileNo, Device device) {
 
         /*if (!TokenValidatorFactory.getTokenValidaor(loginType).isValid(authenticationToken, clientId)) {
             throw new AuthenticationException("Invalid authentication token");
         }*/
 
-        UserEntity userEntity = null;
+        UserEntity userEntity;
         try {
             userEntity = mUserRepository.findUserByPhoneNo(mobileNo);
         } catch (EmptyResultDataAccessException e) {
             throw new UserNotPresentException("User is not present. Please signup first");
         }
+
+        DeviceEntity deviceEntity = addDeviceInternal(userEntity, device);
+
+        mOTPService.generateOtp(userEntity, deviceEntity);
+        User user = mUserEntityModelConverter.toModel(userEntity);
+        user.setDevice(mDeviceEntityModelConverter.toModel(deviceEntity));
+
+        return user;
+    }
+
+    @Override
+    public long addDevice(final long userId, final Device device) {
+        UserEntity userEntity;
+        try {
+            userEntity = mUserRepository.findOne(userId);
+        } catch (EmptyResultDataAccessException e) {
+            throw new UserNotPresentException("User is not present. Please signup first");
+        }
+        DeviceEntity deviceEntity = addDeviceInternal(userEntity, device);
+        return deviceEntity.getId();
+    }
+
+    private DeviceEntity addDeviceInternal(UserEntity userEntity, final Device device) {
 
         //Check if device already present if not present than create new device.
         Set<DeviceEntity> deviceEntities = userEntity.getDeviceEntities();
@@ -147,9 +174,23 @@ public class UserService implements IUserService {
             deviceEntities.add(deviceEntity);
             mUserRepository.update(userEntity);
         }
+        return deviceEntity;
+    }
 
-        mOTPService.generateOtp(userEntity, deviceEntity);
-        return userEntity.getId();
+    @Override
+    public String deleteDevice(final String deviceId, final String userId) {
+        return mDeviceService.deleteDevice(deviceId, userId);
+    }
+
+    @Override
+    public Device updateGcmToken(final String gcmToken, final String deviceId, final String emailId) {
+        DeviceEntity deviceEntity = mDeviceService.updateGCMToken(gcmToken, emailId, deviceId);
+        return mDeviceEntityModelConverter.toModel(deviceEntity);
+    }
+
+    @Override
+    public Collection<Device> getDevicesByUser(final String userId) {
+        return mDeviceService.getDevicesByUser(userId);
     }
 
     private List<DataException.DataError> validateUser(User user) {
@@ -171,8 +212,5 @@ public class UserService implements IUserService {
             errors.add(new DataError(ErrorCodes.MISSING_DEVICE_UUID, "Device UUID can't be empty"));
         }
         return errors;
-
     }
-
-
 }

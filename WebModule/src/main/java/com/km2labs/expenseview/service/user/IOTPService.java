@@ -25,4 +25,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface IOTPService {
     void generateOtp(UserEntity userEntity, DeviceEntity deviceEntity);
+
+    boolean verifyOTP(long userId, long deviceId, String otp);
 }

@@ -17,9 +17,12 @@
 
 package com.km2labs.expenseview.service.device;
 
+import com.km2labs.expenseview.database.entity.DeviceEntity;
 import com.km2labs.expenseview.rest.model.Device;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
 
 /**
  * Created by STyagi on 7/27/2015.
@@ -28,13 +31,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface IDeviceService {
 
-    String updateGCMToken(String gcmToken, long memberId, String deviceUUId);
+    DeviceEntity updateGCMToken(String gcmToken, String userId, String deviceId);
 
-    Device updateDevice(Device device, String emailId);
-
-    String deleteDevice(String details, String emailId);
+    String deleteDevice(String details, String userId);
 
     Device addDevice(long memberID, Device device);
 
-    Device getDeviceByMemberKey(long memberKey);
+    Collection<Device> getDevicesByUser(String memberKey);
+
+    Device getUserDeviceByiD(long id, String deviceUUID, String userId);
 }

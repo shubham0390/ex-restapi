@@ -17,6 +17,7 @@
 
 package com.km2labs.expenseview.rest.resources.user;
 
+import com.km2labs.expenseview.rest.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,5 +34,5 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Setter
 @AllArgsConstructor
 public class LoginResponse {
-    protected long deviceId;
+    protected User deviceId;
 }

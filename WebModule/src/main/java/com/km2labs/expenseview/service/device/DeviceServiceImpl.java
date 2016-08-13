@@ -28,6 +28,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
+import java.util.Collection;
 
 /**
  * Created by Subham Tyagi
@@ -52,32 +53,14 @@ public class DeviceServiceImpl implements IDeviceService {
     }
 
     @Override
-    public String updateGCMToken(String gcmToken, long memberId, String deviceUUId) {
-        DeviceEntity deviceEntity = null;
-        try {
-            deviceEntity = mDeviceRepository.getDeviceByMemberAndDeviceId(memberId, deviceUUId);
-            log.info("Device already present");
-        } catch (NonUniqueResultException e) {
-            log.error("Should not be two device for same device UUID");
-        } catch (NoResultException e) {
-            log.info("No device present with given uuid" + deviceUUId);
-        }
-
-        if (deviceEntity == null) {
-            throw new RuntimeException();
-        }
+    public DeviceEntity updateGCMToken(String gcmToken, String userId, String deviceId) {
+        DeviceEntity deviceEntity = mDeviceRepository.getUserDeviceByiD(Long.parseLong(deviceId), "", userId);
         deviceEntity.setGcmToken(gcmToken);
-
-        return null;
+        return mDeviceRepository.update(deviceEntity);
     }
 
     @Override
-    public Device updateDevice(Device device, String emailId) {
-        return null;
-    }
-
-    @Override
-    public String deleteDevice(String details, String emailId) {
+    public String deleteDevice(String details, String userId) {
         return null;
     }
 
@@ -110,7 +93,13 @@ public class DeviceServiceImpl implements IDeviceService {
     }
 
     @Override
-    public Device getDeviceByMemberKey(long memberKey) {
-        return null;
+    public Collection<Device> getDevicesByUser(String userId) {
+        return mEntityModelConverter.toModel(mDeviceRepository.findDevicesByUser(Long.parseLong(userId)));
+    }
+
+    @Override
+    public Device getUserDeviceByiD(final long id, final String deviceUUID, final String userId) {
+        DeviceEntity deviceEntity = mDeviceRepository.getUserDeviceByiD(id, deviceUUID, userId);
+        return mEntityModelConverter.toModel(deviceEntity);
     }
 }

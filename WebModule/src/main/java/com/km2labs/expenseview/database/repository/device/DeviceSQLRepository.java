@@ -18,7 +18,8 @@
 package com.km2labs.expenseview.database.repository.device;
 
 import com.km2labs.expenseview.database.entity.DeviceEntity;
-import com.km2labs.expenseview.database.entity.UserEntity;
+import com.km2labs.expenseview.database.entity.DeviceEntity_;
+import com.km2labs.expenseview.database.entity.UserEntity_;
 import com.km2labs.expenseview.database.repository.BaseRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
@@ -44,11 +46,6 @@ public class DeviceSQLRepository extends BaseRepository<DeviceEntity> implements
 
     public DeviceSQLRepository() {
         setClazz(DeviceEntity.class);
-    }
-
-    @Override
-    public UserEntity getUser(long deviceId) {
-        return null;
     }
 
     @Override
@@ -81,10 +78,30 @@ public class DeviceSQLRepository extends BaseRepository<DeviceEntity> implements
                         builder.equal(root.get(DeviceEntity_.user).get(UserEntity_.id), memberId)
                 )
         );
-
         DeviceEntity deviceEntity = mEntityManager.createQuery(query).getSingleResult();
         log.debug("ENTER METHOD getDeviceByMemberAndDeviceId");
         return deviceEntity;
+    }
+
+    @Override
+    public DeviceEntity getUserDeviceByiD(final long id, final String deviceUUID, final String userId) {
+        CriteriaBuilder cb = mEntityManager.getCriteriaBuilder();
+        CriteriaQuery<DeviceEntity> query = cb.createQuery(DeviceEntity.class);
+        Root<DeviceEntity> root = getRoot(query);
+
+        Predicate deviceIdPredicate = cb.equal(root.get(DeviceEntity_.id), id);
+        Predicate deviceUUIDPredicate = cb.equal(root.get(DeviceEntity_.deviceUUID), deviceUUID);
+        Predicate idOrUUIDPredicate = cb.or(deviceIdPredicate, deviceUUIDPredicate);
+        Predicate userIdPredicate = cb.equal(root.get(DeviceEntity_.user).get(UserEntity_.id), userId);
+        query.where(cb.and(idOrUUIDPredicate, userIdPredicate));
+
+        return mEntityManager.createQuery(query).getSingleResult();
+    }
+
+    private Root<DeviceEntity> getRoot(final CriteriaQuery<DeviceEntity> query) {
+        Metamodel m = mEntityManager.getMetamodel();
+        EntityType<DeviceEntity> entityType = m.entity(DeviceEntity.class);
+        return query.from(entityType);
     }
 
     @Override

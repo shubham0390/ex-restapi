@@ -93,7 +93,7 @@ public class UserRepository extends BaseRepository<UserEntity> implements IUserR
         List<Predicate> predicates = new ArrayList<>();
         predicates.add(cb.equal(c.get(UserEntity_.email), email));
         predicates.add(cb.equal(c.get(UserEntity_.phoneNumber), phoneNumber));
-        Predicate predicate = cb.and(predicates.toArray(new Predicate[]{}));
+        Predicate predicate = cb.or(predicates.toArray(new Predicate[]{}));
         cq.where(predicate);
         return mEntityManager.createQuery(cq).getSingleResult();
     }

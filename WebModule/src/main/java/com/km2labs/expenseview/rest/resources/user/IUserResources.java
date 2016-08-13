@@ -18,7 +18,6 @@
 package com.km2labs.expenseview.rest.resources.user;
 
 import com.km2labs.expenseview.rest.model.Device;
-import com.km2labs.expenseview.rest.model.User;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -47,22 +46,22 @@ public interface IUserResources {
     @POST
     @Path("/{userId}/devices")
     @Valid
-    long addDevice(@NotNull @PathParam("userId") long memberId, Device device);
+    long addDevice(@NotNull @PathParam("userId") long userID, Device device);
 
     @PUT
-    @Path("/{userId}/devices")
+    @Path("/{userId}/devices/{deviceId}")
     @Valid
-    Device updateDevice(@NotNull @PathParam("userId") String emailId, Device device);
+    Response updateGCMTokenDevice(@NotNull @PathParam("userId") String userId, @PathParam("deviceId") String deviceId, String GCMToken);
 
     @DELETE
     @Path("/{userId}/devices")
     @Valid
-    String deleteDevice(@NotNull @QueryParam("deviceUUID") String detailsUUID,
-                        @NotNull @PathParam("userId") String emailId);
+    Response deleteDevice(@NotNull @QueryParam("deviceId") String deviceId,
+                          @NotNull @PathParam("userId") String userId);
 
     @GET
     @Path("/{userId}/devices")
-    User getDevices(@NotNull @PathParam("userId") String memberId);
+    Response getDevices(@NotNull @PathParam("userId") String userId);
 
     @GET
     @Path("/demo")

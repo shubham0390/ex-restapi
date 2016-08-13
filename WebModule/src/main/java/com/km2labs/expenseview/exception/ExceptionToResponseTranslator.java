@@ -89,7 +89,7 @@ public class ExceptionToResponseTranslator {
         // exceptions super class is ApplicationException
         // lets fall back on Exception
         if (bestMatchedStatusCode == null) {
-            bestMatchedStatusCode = mExceptionVsCodeLookup.get(Exception.class.getSimpleName());
+            bestMatchedStatusCode = Response.Status.INTERNAL_SERVER_ERROR;
         }
         return bestMatchedStatusCode;
     }

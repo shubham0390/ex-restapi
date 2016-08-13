@@ -21,6 +21,7 @@ import com.km2labs.expenseview.database.entity.DeviceEntity;
 import com.km2labs.expenseview.database.entity.UserEntity;
 import com.km2labs.expenseview.database.entity.UserOTPEntity;
 import com.km2labs.expenseview.database.repository.otp.IOTPRepository;
+import com.km2labs.expenseview.exception.AuthenticationException;
 import com.km2labs.expenseview.service.TOTP;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
@@ -147,9 +148,22 @@ public class OTPService implements IOTPService {
         }
     }
 
-
+    @Override
     public boolean verifyOTP(long userId, long deviceId, String otp) {
         UserOTPEntity otpEntity = mOTpRepository.findOne(userId, deviceId);
-        return false;
+        long createdTime = otpEntity.getGeneratedTime();
+        DateTime otpCreatedTime = new DateTime(createdTime);
+
+        DateTime currentTime = new DateTime();
+        currentTime.minusMinutes(5);
+
+        if (otpCreatedTime.compareTo(currentTime) != 1) {
+            throw new AuthenticationException("Otp has expired");
+        }
+
+        if (otpEntity.getOtp() != Integer.parseInt(otp)) {
+            throw new AuthenticationException("Invalid otp");
+        }
+        return true;
     }
 }
