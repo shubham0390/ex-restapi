@@ -12,7 +12,7 @@
       http://www.springframework.org/schema/tx
       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-    <context:component-scan base-package="com.mmt.shubh"/>
+    <context:component-scan base-package="com.km2labs.expenseview"/>
     <context:annotation-config/>
    <!-- <tx:annotation-driven/>-->
 

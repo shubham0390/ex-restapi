@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--suppress SpringFacetInspection -->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jaxrs="http://cxf.apache.org/jaxrs"
@@ -11,19 +10,21 @@
                         http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
                         http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 
-    <context:component-scan base-package="com.mmt.shubh"/>
+    <context:component-scan base-package="com.km2labs.expenseview"/>
 
-    <jaxrs:server id="expenseViewCxfServer" address="http://localhost:8080/expenseView/v1/"
-
+    <jaxrs:server id="cxfServer" address="http://localhost:8080/expensemanager/rest/"
                   basePackages=
-                          "com.mmt.shubh.rest.resources.expensebook,
-                   com.mmt.shubh.rest.resources.member,
-                   com.mmt.shubh.rest.resources.category,
-                   com.mmt.shubh.rest.resources.expensebook,
-                   com.mmt.shubh.rest.providers,
-                   com.mmt.shubh.rest.bindings,
-                   com.mmt.shubh.rest.markers
-                  ">
+                          "com.km2labs.expenseview.rest.resources.expensebook,
+                           com.km2labs.expenseview.rest.resources.member,
+                           com.km2labs.expenseview.rest.resources.category,
+                           com.km2labs.expenseview.rest.resources.expensebook,
+                           com.km2labs.expenseview.rest.resources.user,
+                           com.km2labs.expenseview.rest.providers,
+                           com.km2labs.expenseview.rest.bindings,
+                           com.km2labs.expenseview.rest.markers">
+        <jaxrs:extensionMappings>
+            <entry key="json" value="application/json"/>
+        </jaxrs:extensionMappings>
         <jaxrs:features>
             <cxf:logging/>
         </jaxrs:features>

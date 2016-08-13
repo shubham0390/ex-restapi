@@ -23,7 +23,7 @@
         </triggeringPolicy>
     </appender>
 
-    <logger name="com.mmt.shubh" level="debug"/>
+    <logger name="com.km2labs.expenseview" level="debug"/>
     <logger name="org.apache.cxf" level="debug"/>
     <logger name="org.hibernate" level="info"/>
 

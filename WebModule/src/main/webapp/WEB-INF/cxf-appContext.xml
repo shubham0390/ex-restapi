@@ -9,17 +9,17 @@
 
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
     <!-- Exception mapper -->
-    <bean id="exceptionMapper" class="com.mmt.shubh.rest.providers.ExpenseManagerExceptionMapper"/>
+    <!--<bean id="exceptionMapper" class="ServerExceptionMapper"/>-->
     <jaxrs:server address="/"
                   basePackages=
-                          "com.mmt.shubh.rest.resources.expensebook,
-                   com.mmt.shubh.rest.resources.member,
-                   com.mmt.shubh.rest.resources.category,
-                   com.mmt.shubh.rest.resources.expensebook,
-                   com.mmt.shubh.rest.providers,
-                   com.mmt.shubh.rest.bindings,
-                   com.mmt.shubh.rest.markers
-                  ">
+                          "com.km2labs.expenseview.rest.resources.expensebook,
+                   com.km2labs.expenseview.rest.resources.member,
+                   com.km2labs.expenseview.rest.resources.category,
+                   com.km2labs.expenseview.rest.resources.expensebook,
+                   com.km2labs.expenseview.rest.resources.user,
+                   com.km2labs.expenseview.rest.providers,
+                   com.km2labs.expenseview.rest.bindings,
+                   com.km2labs.expenseview.rest.markers">
         <jaxrs:providers>
             <ref bean="jsonProvider"/>
         </jaxrs:providers>
