@@ -17,7 +17,8 @@
 
 package com.km2labs.expenseview.rest.resources.user;
 
-import com.km2labs.expenseview.rest.model.Device;
+import com.km2labs.expenseview.rest.dto.Device;
+import com.km2labs.expenseview.rest.dto.auth.LoginRequestDto;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -32,16 +33,6 @@ import javax.ws.rs.core.Response;
 @Consumes("application/json")
 public interface IUserResources {
 
-    @POST
-    Response signup(SignupRequest signupRequest);
-
-    @PUT
-    @Path("/login")
-    Response login(LoginRequest loginRequest);
-
-    @PUT
-    @Path("/logout")
-    void logout(String emailId);
 
     @POST
     @Path("/{userId}/devices")
@@ -65,7 +56,7 @@ public interface IUserResources {
 
     @GET
     @Path("/demo")
-    LoginRequest getDemo();
+    LoginRequestDto getDemo();
 
 
 }

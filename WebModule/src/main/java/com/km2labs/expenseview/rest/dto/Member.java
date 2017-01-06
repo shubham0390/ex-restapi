@@ -15,14 +15,14 @@
  *
  */
 
-package com.km2labs.expenseview.rest.model;
+package com.km2labs.expenseview.rest.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,19 +31,49 @@ import java.util.List;
  * <p>
  * TODO: Add class comments
  */
+@XmlRootElement
+@AutoProperty
 @Getter
 @Setter
-@AutoProperty
-@XmlRootElement
-public class ExpenseBook {
-    private long id;
-    private String name;
-    private long ownerKey;
-    private String profileImagePath;
-    private String description;
-    private String type;
-    private long accountId;
-    private List<Member> memberList;
-    private Date creationDate;
+public class Member {
 
+    private long id;
+
+    private String memberName;
+
+    private String memberEmail;
+
+    private String userPassword;
+
+    private String phoneNumber;
+
+    private String coverPhotoUrl;
+
+    private String profilePhotoUrl;
+
+    private boolean isRegistered;
+
+    private boolean isActive;
+
+    private Device deviceList;
+
+    private List<ExpenseBook> expenseBooks;
+
+    private List<Account> accounts;
+
+    @Override
+    public boolean equals(Object o) {
+        return Pojomatic.equals(this, o);
+    }
+
+    @Override
+    public int hashCode() {
+        return Pojomatic.hashCode(this);
+    }
+
+    @Override
+    public String toString() {
+        return Pojomatic.toString(this);
+
+    }
 }

@@ -22,7 +22,7 @@ package com.km2labs.expenseview.exception;
  */
 public interface ErrorCodes {
     int MISSING_USER = 100;
-    int MISSING_EMAIL_ADDRESS = 101;
+    int MISSING_USER_NAME = 101;
     int MISSING_PHONE_NUMBER = 102;
     int MISSING_DEVICE = 103;
     int MISSING_DEVICE_UUID = 104;

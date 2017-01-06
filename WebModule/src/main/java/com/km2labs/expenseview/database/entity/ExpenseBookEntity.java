@@ -80,7 +80,7 @@ public class ExpenseBookEntity implements Serializable {
             @JoinColumn(name = "member_id", referencedColumnName = "ID")
     )
     @Property(policy = PojomaticPolicy.NONE)
-    private Collection<MemberEntity> memberList;
+    private Collection<UserEntity> memberList;
 
     @OneToMany(mappedBy = "expenseBook", fetch = FetchType.LAZY)
     @Property(policy = PojomaticPolicy.NONE)

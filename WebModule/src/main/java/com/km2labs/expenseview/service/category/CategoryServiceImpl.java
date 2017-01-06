@@ -20,7 +20,7 @@ package com.km2labs.expenseview.service.category;
 import com.km2labs.expenseview.database.entity.CategoryEntity;
 import com.km2labs.expenseview.database.repository.category.ICategoryRepository;
 import com.km2labs.expenseview.rest.model.Category;
-import com.km2labs.expenseview.rest.model.Member;
+import com.km2labs.expenseview.rest.dto.Member;
 import com.km2labs.expenseview.service.converter.IEntityModelConverter;
 import com.km2labs.expenseview.service.member.IMemberService;
 import lombok.extern.slf4j.Slf4j;

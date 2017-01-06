@@ -19,7 +19,7 @@ package com.km2labs.expenseview.service.expensebook;
 
 import com.km2labs.expenseview.database.entity.ExpenseBookEntity;
 import com.km2labs.expenseview.rest.model.ExpenseBook;
-import com.km2labs.expenseview.rest.model.Member;
+import com.km2labs.expenseview.rest.dto.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

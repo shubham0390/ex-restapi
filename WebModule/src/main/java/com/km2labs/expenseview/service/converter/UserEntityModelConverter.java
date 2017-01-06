@@ -19,7 +19,7 @@ package com.km2labs.expenseview.service.converter;
 
 import com.km2labs.expenseview.database.entity.DeviceEntity;
 import com.km2labs.expenseview.database.entity.UserEntity;
-import com.km2labs.expenseview.rest.model.Device;
+import com.km2labs.expenseview.rest.dto.Device;
 import com.km2labs.expenseview.rest.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

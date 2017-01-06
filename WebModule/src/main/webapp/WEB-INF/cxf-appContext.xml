@@ -30,13 +30,12 @@
     <jaxrs:server address="/"
                   basePackages=
                           "com.km2labs.expenseview.rest.resources.expensebook,
-                   com.km2labs.expenseview.rest.resources.member,
-                   com.km2labs.expenseview.rest.resources.category,
-                   com.km2labs.expenseview.rest.resources.expensebook,
-                   com.km2labs.expenseview.rest.resources.user,
-                   com.km2labs.expenseview.rest.providers,
-                   com.km2labs.expenseview.rest.bindings,
-                   com.km2labs.expenseview.rest.markers">
+                           com.km2labs.expenseview.rest.resources.member,
+                           com.km2labs.expenseview.rest.resources.category,
+                           com.km2labs.expenseview.rest.resources.expensebook,
+                           com.km2labs.expenseview.rest.resources.user,
+                           com.km2labs.expenseview.rest.providers,
+                           com.km2labs.expenseview.rest.markers">
         <jaxrs:providers>
             <ref bean="jsonProvider"/>
         </jaxrs:providers>

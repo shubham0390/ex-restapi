@@ -18,7 +18,7 @@
 package com.km2labs.expenseview.rest.resources.expensebook;
 
 import com.km2labs.expenseview.rest.model.ExpenseBook;
-import com.km2labs.expenseview.rest.model.Member;
+import com.km2labs.expenseview.rest.dto.Member;
 import com.km2labs.expenseview.service.expensebook.IExpenseBookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

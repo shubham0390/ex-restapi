@@ -19,7 +19,7 @@ package com.km2labs.expenseview.service.member;
 
 import com.km2labs.expenseview.rest.model.Account;
 import com.km2labs.expenseview.rest.model.ExpenseBook;
-import com.km2labs.expenseview.rest.model.Member;
+import com.km2labs.expenseview.rest.dto.Member;
 import com.km2labs.expenseview.service.account.IAccountService;
 import com.km2labs.expenseview.service.expensebook.IExpenseBookService;
 import com.km2labs.expenseview.utility.AccountType;

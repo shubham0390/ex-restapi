@@ -17,7 +17,7 @@
 
 package com.km2labs.expenseview.rest.resources.member;
 
-import com.km2labs.expenseview.rest.model.Member;
+import com.km2labs.expenseview.rest.dto.Member;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.stereotype.Service;
 

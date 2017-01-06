@@ -17,7 +17,7 @@
 
 package com.km2labs.expenseview.service.member;
 
-import com.km2labs.expenseview.rest.model.Member;
+import com.km2labs.expenseview.rest.dto.Member;
 import org.springframework.stereotype.Service;
 
 /**

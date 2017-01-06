@@ -17,10 +17,10 @@
 
 package com.km2labs.expenseview;
 
-import com.km2labs.expenseview.rest.model.Device;
+import com.km2labs.expenseview.rest.dto.Device;
 import com.km2labs.expenseview.rest.model.User;
-import com.km2labs.expenseview.rest.resources.user.SignupRequest;
-import com.km2labs.expenseview.rest.resources.user.SignupResponse;
+import com.km2labs.expenseview.rest.dto.auth.SignupRequestDto;
+import com.km2labs.expenseview.rest.dto.auth.SignupResponseDto;
 import org.junit.Test;
 import org.springframework.http.*;
 import org.springframework.web.client.RestClientException;
@@ -38,7 +38,7 @@ public class UserResourceTest extends BaseResourceTest {
 
     @Test
     public void testSignup() {
-        SignupRequest signupRequest = new SignupRequest();
+        SignupRequestDto signupRequestDto = new SignupRequestDto();
 
         User user = new User();
         user.setEmail("shubham.k.tyagi@gmail.com");
@@ -46,7 +46,7 @@ public class UserResourceTest extends BaseResourceTest {
         user.setPhoneNumber("9663295153");
         user.setProfileImageUrl("ajsbdlfkjasljdkfhalsjkhdfljs");
         user.setCoverImageUrl("mdnckajsndkjfskdjnfkjd");
-        signupRequest.setUser(user);
+        signupRequestDto.setUser(user);
 
         Device device = new Device();
         device.setDeviceUUID("afdkasdfkhaskfdhaskdfhfsh");
@@ -57,13 +57,13 @@ public class UserResourceTest extends BaseResourceTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<User> httpEntity = new HttpEntity<>(user, headers);
-        ResponseEntity<SignupResponse> responseEntity = null;
+        ResponseEntity<SignupResponseDto> responseEntity = null;
         try {
-            responseEntity = mRestTemplate.postForEntity(getUrl("user"), httpEntity, SignupResponse.class);
+            responseEntity = mRestTemplate.postForEntity(getUrl("user"), httpEntity, SignupResponseDto.class);
         } catch (RestClientException e) {
             e.printStackTrace();
         }
-        SignupResponse apiResult = responseEntity.getBody();
+        SignupResponseDto apiResult = responseEntity.getBody();
         assertThat(responseEntity.getStatusCode(), equalTo(HttpStatus.OK));
         //assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
         // assertNotNull(((User) responseEntity.getBody().getData()).getId());

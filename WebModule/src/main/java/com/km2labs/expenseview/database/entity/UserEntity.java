@@ -44,8 +44,11 @@ public class UserEntity implements Serializable {
     @Column(name = "user_name", nullable = false)
     private String name;
 
-    @Column(name = "user_email", nullable = false, unique = true)
+    @Column(name = "user_email", unique = true)
     private String email;
+
+    @Column(name = "phone_number", nullable = false, unique = true)
+    private String phoneNumber;
 
     @Column(name = "cover_photo_url")
     private String coverPhotoUrl;
@@ -56,8 +59,6 @@ public class UserEntity implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.REFRESH, CascadeType.REMOVE, CascadeType.MERGE})
     @Property(policy = PojomaticPolicy.NONE)

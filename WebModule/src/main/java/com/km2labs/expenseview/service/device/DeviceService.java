@@ -18,7 +18,7 @@
 package com.km2labs.expenseview.service.device;
 
 import com.km2labs.expenseview.database.entity.DeviceEntity;
-import com.km2labs.expenseview.rest.model.Device;
+import com.km2labs.expenseview.rest.dto.Device;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +29,7 @@ import java.util.Collection;
  */
 @Service
 @Transactional
-public interface IDeviceService {
+public interface DeviceService {
 
     DeviceEntity updateGCMToken(String gcmToken, String userId, String deviceId);
 
@@ -40,4 +40,6 @@ public interface IDeviceService {
     Collection<Device> getDevicesByUser(String memberKey);
 
     Device getUserDeviceByiD(long id, String deviceUUID, String userId);
+
+    Device updateGcmToken(String gcmToken, String deviceId, String userId);
 }

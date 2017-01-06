@@ -19,16 +19,22 @@ package com.km2labs.expenseview.service.device;
 
 import com.km2labs.expenseview.database.entity.DeviceEntity;
 import com.km2labs.expenseview.database.repository.device.IDeviceRepository;
-import com.km2labs.expenseview.rest.model.Device;
+import com.km2labs.expenseview.exception.DataException;
+import com.km2labs.expenseview.exception.ErrorCodes;
+import com.km2labs.expenseview.rest.dto.Device;
+import com.km2labs.expenseview.rest.dto.User;
 import com.km2labs.expenseview.service.converter.IEntityModelConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Subham Tyagi
@@ -39,7 +45,7 @@ import java.util.Collection;
 
 @Component(value = "deviceServiceImpl")
 @Slf4j
-public class DeviceServiceImpl implements IDeviceService {
+public class DeviceServiceImpl implements DeviceService {
 
     private final IDeviceRepository mDeviceRepository;
 
@@ -66,6 +72,18 @@ public class DeviceServiceImpl implements IDeviceService {
 
     @Override
     public Device addDevice(long memberId, Device device) {
+
+        List<DataException.DataError> errors = new ArrayList<>();
+        if (device == null) {
+            errors.add(new DataException.DataError(ErrorCodes.MISSING_DEVICE, "Device can not be empty"));
+            throw new DataException(errors);
+        }
+
+        errors = validateDevice(device);
+        if (errors.size() > 0) {
+            throw new DataException(errors);
+        }
+
         log.debug("ENTER METHOD addDevice");
         DeviceEntity deviceEntity = null;
 
@@ -79,13 +97,13 @@ public class DeviceServiceImpl implements IDeviceService {
         }
 
         if (deviceEntity == null) {
-            log.debug("Updating device with new data for member id " + memberId);
+            log.debug("Creating new device for member id :" + memberId);
             deviceEntity = mEntityModelConverter.toEntity(device);
             mDeviceRepository.save(deviceEntity);
             log.debug("EXIT METHOD addDevice");
             return null;
         } else {
-            log.debug("Creating new device for member id :" + memberId);
+            log.debug("Updating device with new data for member id " + memberId);
             mDeviceRepository.save(mEntityModelConverter.toEntity(device));
             log.debug("EXIT METHOD addDevice");
             return null;
@@ -101,5 +119,17 @@ public class DeviceServiceImpl implements IDeviceService {
     public Device getUserDeviceByiD(final long id, final String deviceUUID, final String userId) {
         DeviceEntity deviceEntity = mDeviceRepository.getUserDeviceByiD(id, deviceUUID, userId);
         return mEntityModelConverter.toModel(deviceEntity);
+    }
+
+    private List<DataException.DataError> validateDevice(Device device) {
+        List<DataException.DataError> errors = new ArrayList<>();
+
+        if (StringUtils.isEmpty(device.getDeviceUUID()))
+            errors.add(new DataException.DataError(ErrorCodes.MISSING_DEVICE_UUID, "Device uuid can't be  Empty"));
+
+        if (StringUtils.isEmpty(device.getGcmToken()))
+            errors.add(new DataException.DataError(ErrorCodes.MISSING_GCM_TOKEN, "Gcm token can't be Empty"));
+
+        return errors;
     }
 }

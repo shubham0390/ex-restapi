@@ -15,8 +15,9 @@
  *
  */
 
-package com.km2labs.expenseview.rest.resources.user;
+package com.km2labs.expenseview.rest.dto.auth;
 
+import com.km2labs.expenseview.rest.dto.User;
 import com.km2labs.expenseview.rest.model.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,16 +26,12 @@ import org.pojomatic.annotations.AutoProperty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * Created by suze on 08/08/16.
- */
+
 @XmlRootElement
 @AutoProperty
 @Getter
 @Setter
-public class SignupRequest {
-    private String loginType;
-    private String authenticationToken;
+public class SignupResponseDto {
     private User user;
 
     @Override

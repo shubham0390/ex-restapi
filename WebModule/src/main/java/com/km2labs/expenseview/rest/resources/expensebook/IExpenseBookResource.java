@@ -18,7 +18,7 @@
 package com.km2labs.expenseview.rest.resources.expensebook;
 
 import com.km2labs.expenseview.rest.model.ExpenseBook;
-import com.km2labs.expenseview.rest.model.Member;
+import com.km2labs.expenseview.rest.dto.Member;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.*;

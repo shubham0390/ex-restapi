@@ -19,8 +19,8 @@ package com.km2labs.expenseview.service.member;
 
 import com.km2labs.expenseview.database.entity.MemberEntity;
 import com.km2labs.expenseview.database.repository.member.IMemberRepository;
-import com.km2labs.expenseview.rest.model.Device;
-import com.km2labs.expenseview.rest.model.Member;
+import com.km2labs.expenseview.rest.dto.Device;
+import com.km2labs.expenseview.rest.dto.Member;
 import com.km2labs.expenseview.service.converter.IEntityModelConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

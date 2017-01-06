@@ -15,37 +15,41 @@
  *
  */
 
-package com.km2labs.expenseview.rest.model;
+package com.km2labs.expenseview.rest.dto.auth;
 
+import com.km2labs.expenseview.common.authproviders.AuthProvider;
+import com.km2labs.expenseview.rest.dto.Device;
 import lombok.Getter;
 import lombok.Setter;
+import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Created by Subham Tyagi
- * On 6/10/2015.
- * <p>
- * TODO: Add class comments
+ * Created by suze on 11/08/16.
  */
 @XmlRootElement
+@AutoProperty
 @Getter
 @Setter
-public class Expense {
+public class LoginRequestDto {
+    private AuthProvider authProvider;
+    private Device device;
 
-    private long id;
+    @Override
+    public boolean equals(Object o) {
+        return Pojomatic.equals(this, o);
+    }
 
-    private String amount;
+    @Override
+    public int hashCode() {
+        return Pojomatic.hashCode(this);
+    }
 
-    private long date;
+    @Override
+    public String toString() {
+        return Pojomatic.toString(this);
 
-    private String name;
-
-    private String description;
-
-    private long expenseBookId;
-
-    private long categoryId;
-
-    private long memberId;
+    }
 }

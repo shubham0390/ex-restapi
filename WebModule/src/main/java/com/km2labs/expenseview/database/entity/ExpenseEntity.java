@@ -57,7 +57,7 @@ public class ExpenseEntity extends AbstractEntity {
 
     @OneToOne(fetch = FetchType.LAZY,optional = false)
     @PrimaryKeyJoinColumn
-    private MemberEntity owner;
+    private UserEntity owner;
 
     @ManyToOne
     @JoinColumn(name = "expense_book_id", nullable = false)
@@ -77,7 +77,7 @@ public class ExpenseEntity extends AbstractEntity {
             @JoinColumn(name = "member_id", referencedColumnName = "ID")
     )
     @Property(policy = PojomaticPolicy.NONE)
-    private Collection<MemberEntity> members;
+    private Collection<UserEntity> members;
 
     @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
     @PrimaryKeyJoinColumn

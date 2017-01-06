@@ -15,36 +15,24 @@
  *
  */
 
-package com.km2labs.expenseview.rest.resources.user;
+package com.km2labs.expenseview.rest.dto.auth;
 
-import com.km2labs.expenseview.rest.model.User;
+import com.km2labs.expenseview.rest.dto.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-
+/**
+ * Created by Subham on 18/05/16.
+ */
 @XmlRootElement
 @AutoProperty
 @Getter
 @Setter
-public class SignupResponse {
+@AllArgsConstructor
+public class LoginResponseDto {
     private User user;
-    @Override
-    public boolean equals(Object o) {
-        return Pojomatic.equals(this, o);
-    }
-
-    @Override
-    public int hashCode() {
-        return Pojomatic.hashCode(this);
-    }
-
-    @Override
-    public String toString() {
-        return Pojomatic.toString(this);
-
-    }
 }

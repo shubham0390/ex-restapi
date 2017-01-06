@@ -22,7 +22,7 @@ import com.km2labs.expenseview.database.entity.MemberEntity;
 import com.km2labs.expenseview.database.repository.account.IAccountRepository;
 import com.km2labs.expenseview.rest.model.Account;
 import com.km2labs.expenseview.rest.model.AccountTransaction;
-import com.km2labs.expenseview.rest.model.Member;
+import com.km2labs.expenseview.rest.dto.Member;
 import com.km2labs.expenseview.service.converter.IEntityModelConverter;
 import com.km2labs.expenseview.service.member.IMemberService;
 import lombok.extern.slf4j.Slf4j;

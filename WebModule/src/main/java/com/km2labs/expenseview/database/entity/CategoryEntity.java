@@ -53,10 +53,6 @@ public class CategoryEntity implements Serializable {
     @Column(nullable = false)
     private String type;
 
-    @ManyToOne
-    @Property(policy = PojomaticPolicy.NONE)
-    private MemberEntity owner;
-
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @Property(policy = PojomaticPolicy.NONE)
     private Collection<ExpenseEntity> expenses;

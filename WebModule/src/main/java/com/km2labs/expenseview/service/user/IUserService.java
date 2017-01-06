@@ -17,26 +17,16 @@
 
 package com.km2labs.expenseview.service.user;
 
-import com.km2labs.expenseview.rest.model.Device;
-import com.km2labs.expenseview.rest.model.User;
+import com.km2labs.expenseview.rest.dto.User;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 
 /**
  * Created by suze on 30/07/16.
  */
 @Service
 public interface IUserService {
-    User signup(String loginType, String authenticationToken, User user);
+    User createUser(User user);
 
-    User user(String loginType, String authenticationToken, String clintId, Device device);
-
-    long addDevice(long memberId, Device device);
-
-    String deleteDevice(String deviceUUID, String emailId);
-
-    Device updateGcmToken(String gcmToken, String deviceUUID, String emailId);
-
-    Collection<Device> getDevicesByUser(String userId);
+    void validateUserInternal();
 }

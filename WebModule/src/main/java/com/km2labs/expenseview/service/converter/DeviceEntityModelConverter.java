@@ -18,7 +18,7 @@
 package com.km2labs.expenseview.service.converter;
 
 import com.km2labs.expenseview.database.entity.DeviceEntity;
-import com.km2labs.expenseview.rest.model.Device;
+import com.km2labs.expenseview.rest.dto.Device;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 

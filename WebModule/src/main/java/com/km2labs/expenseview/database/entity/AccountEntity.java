@@ -48,7 +48,7 @@ public class AccountEntity extends AbstractEntity {
     private String accountType;
 
     @Column(name = "member_name", nullable = false)
-    private MemberEntity member;
+    private UserEntity member;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<AccountTransactionEntity> expense;

@@ -17,9 +17,10 @@
 
 package com.km2labs.expenseview.rest.resources.user;
 
-import com.km2labs.expenseview.rest.model.Device;
-import com.km2labs.expenseview.rest.model.User;
+import com.km2labs.expenseview.rest.dto.Device;
+import com.km2labs.expenseview.rest.dto.auth.LoginRequestDto;
 import com.km2labs.expenseview.service.LoginType;
+import com.km2labs.expenseview.service.device.DeviceService;
 import com.km2labs.expenseview.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,49 +38,24 @@ public class UserResource implements IUserResources {
 
     private final IUserService mUserService;
 
+    private final DeviceService mDeviceService;
+
     @Autowired
-    public UserResource(@Qualifier(value = "userService") IUserService mUserService) {
+    public UserResource(@Qualifier(value = "userService") IUserService mUserService,
+                        @Qualifier("deviceServiceImpl") DeviceService mDeviceService) {
         this.mUserService = mUserService;
-    }
-
-    @Override
-    public Response signup(SignupRequest signupRequest) {
-        User inputUser = signupRequest.getUser();
-        SignupResponse signupResponse = new SignupResponse();
-        try {
-            User user = mUserService.signup(signupRequest.getLoginType(), signupRequest.getAuthenticationToken(), inputUser);
-            signupResponse.setUser(user);
-            return generateResponseWithTimestampDates(signupResponse);
-
-        } catch (Exception e) {
-            return buildErrorResponse(e);
-        }
-    }
-
-    @Override
-    public Response login(LoginRequest loginRequest) {
-        try {
-            User user = mUserService.user(loginRequest.getLoginType(), loginRequest.getAuthenticationToken(), loginRequest.getMobileNo(), loginRequest.getDevice());
-            return generateResponseWithTimestampDates(new LoginResponse(user));
-        } catch (Exception e) {
-            return buildErrorResponse(e);
-        }
-    }
-
-    @Override
-    public void logout(String emailId) {
-        throw new UnsupportedOperationException();
+        this.mDeviceService = mDeviceService;
     }
 
     @Override
     public long addDevice(@NotNull long userID, Device device) {
-        return mUserService.addDevice(userID, device);
+        return mDeviceService.addDevice(userID, device).getId();
     }
 
     @Override
     public Response updateGCMTokenDevice(@NotNull final String userId, final String deviceId, final String GCMToken) {
         try {
-            Device device = mUserService.updateGcmToken(GCMToken, deviceId, userId);
+            Device device = mDeviceService.updateGcmToken(GCMToken, deviceId, userId);
             return generateResponseWithTimestampDates(device);
         } catch (Exception e) {
             return buildErrorResponse(e);
@@ -89,7 +65,7 @@ public class UserResource implements IUserResources {
     @Override
     public Response deleteDevice(String deviceId, String userId) {
         try {
-            String result = mUserService.deleteDevice(deviceId, userId);
+            String result = mDeviceService.deleteDevice(deviceId, userId);
             return generateResponseWithTimestampDates(result);
         } catch (Exception e) {
             return buildErrorResponse(e);
@@ -99,7 +75,7 @@ public class UserResource implements IUserResources {
     @Override
     public Response getDevices(@NotNull String userId) {
         try {
-            Collection<Device> devices = mUserService.getDevicesByUser(userId);
+            Collection<Device> devices = mDeviceService.getDevicesByUser(userId);
             return generateResponseWithTimestampDates(devices);
         } catch (Exception e) {
             return buildErrorResponse(e);
@@ -107,15 +83,12 @@ public class UserResource implements IUserResources {
     }
 
     @Override
-    public LoginRequest getDemo() {
-        LoginRequest signupRequest = new LoginRequest();
+    public LoginRequestDto getDemo() {
+        LoginRequestDto signupRequest = new LoginRequestDto();
         Device device = new Device();
         device.setDeviceUUID("afdkasdfkhaskfdhaskdfhfsh");
         device.setGcmToken("ahfdkjhsadjfahsdj");
         signupRequest.setDevice(device);
-        signupRequest.setAuthenticationToken("asjdfkjshdflkjhlqwuehihalsdkjhlkfjhkl");
-        signupRequest.setLoginType(LoginType.GOOGLE.name());
-        signupRequest.setMobileNo("9663295153");
         return signupRequest;
     }
 

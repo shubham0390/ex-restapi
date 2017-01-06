@@ -18,7 +18,7 @@
 package com.km2labs.expenseview.service.converter;
 
 import com.km2labs.expenseview.database.entity.MemberEntity;
-import com.km2labs.expenseview.rest.model.Member;
+import com.km2labs.expenseview.rest.dto.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
